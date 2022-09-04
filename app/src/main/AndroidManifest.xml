@@ -16,7 +16,7 @@
         android:usesCleartextTraffic="true"
         tools:ignore="UnusedAttribute">
         <activity
-            android:name=".DutyExample.DutyExample_DetailView"
+            android:name=".DutyExample.DetailView.DetailView"
             android:exported="true" />
         <activity
             android:name=".DutyExample.DutyExample"

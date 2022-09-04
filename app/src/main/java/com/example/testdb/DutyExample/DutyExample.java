@@ -28,7 +28,7 @@ public class DutyExample extends AppCompatActivity {
     SearchView sv_dutyExample; // 검색.
     RecyclerView rv_dutyExample; // RecyclerView
 
-    DutyExample_Adapter example_adapter; // 어댑터.
+    Adapter example_adapter; // 어댑터.
 
     Button btn_allCate, btn_gyomoo, btn_chehum;
 
@@ -42,21 +42,21 @@ public class DutyExample extends AppCompatActivity {
 
         getAllDuties(); // Get 업무 이름 데이터
         searchView(); // SearchView 검색.
-        buttonCategory();
+        buttonCategory(); // Button 카테고리 누르기.
 
 
     }
 
     private void buttonCategory() {
-        btn_allCate = findViewById(R.id.btn_allCate);
-        btn_chehum = findViewById(R.id.btn_chehum);
+        btn_allCate = findViewById(R.id.btn_allCate); // 전체업무.
+        btn_chehum = findViewById(R.id.btn_chehum); // 체험업무.
         btn_chehum.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
             }
         });
-        btn_gyomoo = findViewById(R.id.btn_gyomoo);
+        btn_gyomoo = findViewById(R.id.btn_gyomoo); // 교무업무.
     }
 
     private void searchView() {
@@ -97,7 +97,7 @@ public class DutyExample extends AppCompatActivity {
 
     private void generateDataList(List<DutyName> dutyNameList) {
         rv_dutyExample = findViewById(R.id.rv_dutyExample);
-        example_adapter = new DutyExample_Adapter(this,dutyNameList);
+        example_adapter = new Adapter(this,dutyNameList);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(DutyExample.this);
         rv_dutyExample.setLayoutManager(layoutManager);
         rv_dutyExample.setAdapter(example_adapter);
