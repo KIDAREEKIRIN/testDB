@@ -7,13 +7,14 @@
         <entry key="app/src/main/res/layout/activity_duty_example.xml" value="0.43333333333333335" />
         <entry key="app/src/main/res/layout/activity_duty_example_detail_view.xml" value="0.23333333333333334" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.43333333333333335" />
+        <entry key="app/src/main/res/layout/activity_popup.xml" value="0.15489130434782608" />
         <entry key="app/src/main/res/layout/example_items.xml" value="0.43333333333333335" />
         <entry key="app/src/main/res/layout/layout_item.xml" value="0.43333333333333335" />
         <entry key="app/src/main/res/layout/layout_sub_item.xml" value="0.43333333333333335" />
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">

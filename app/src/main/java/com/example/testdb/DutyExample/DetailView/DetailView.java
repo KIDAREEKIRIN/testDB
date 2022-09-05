@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Toast;
 
 import com.example.testdb.DutyExample.DTO.DutyTitle;
@@ -14,6 +15,7 @@ import com.example.testdb.DutyExample.DTO.SubItem;
 import com.example.testdb.R;
 import com.example.testdb.Retrofit.GetDataService;
 import com.example.testdb.Retrofit.RetrofitClientInstance;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,9 +26,11 @@ import retrofit2.Response;
 
 public class DetailView extends AppCompatActivity {
 
-    String duty_name;
+    String duty_name, addTitle;
     Integer duty_id;
     ActionBar actionBar;
+
+    FloatingActionButton fab_addTitle;
 
     List<DutyTitle> dutyTitleList;
 
@@ -35,9 +39,11 @@ public class DetailView extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_duty_example_detail_view);
 
+        // Intent 로 값 받기.
         Intent intent = getIntent();
         duty_id = intent.getIntExtra("duty_id",0); // duty_id 받아온 값 넣기.
         duty_name = intent.getStringExtra("duty_name"); // duty_name 받아온 값 넣기.
+        addTitle = intent.getStringExtra("addTitle"); // Popup 창에서 추가한 업무 제목.
 
         actionBar = getSupportActionBar();
         assert actionBar != null; // setTitle 을 넣기 위한 방법.
@@ -46,7 +52,26 @@ public class DetailView extends AppCompatActivity {
         dutyTitleList = new ArrayList<>(); // List 만들기.
 
         getAllTitles(); // Title 불러오기.
+        addTitle(); // 업무 제목 추가하기
+        editTitle(); // 업무 제목 수정하기.
 
+    }
+
+    private void editTitle() {
+
+    }
+
+    // 업무 제목 추가하기.
+    private void addTitle() {
+        fab_addTitle = findViewById(R.id.fab_addTitle);
+        fab_addTitle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(),Popup.class);
+                startActivity(intent);
+//                intent.putExtra("duty_id")
+            }
+        });
     }
 
     private void getAllTitles() {

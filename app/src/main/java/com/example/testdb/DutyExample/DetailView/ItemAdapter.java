@@ -1,5 +1,6 @@
 package com.example.testdb.DutyExample.DetailView;
 
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,6 +34,16 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
             tvItemTitle = itemView.findViewById(R.id.tv_item_title);
             // 자식아이템 영역
             rvSubItem = itemView.findViewById(R.id.rv_sub_item);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    int nowPos = getAdapterPosition();
+                    if(nowPos != RecyclerView.NO_POSITION) {
+//                        Intent
+                    }
+                }
+            });
         }
     }
 

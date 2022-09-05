@@ -14,10 +14,10 @@
         android:layout_marginTop="0dp" />
 
     <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+        android:id="@+id/fab_addTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/rv_item"
-        android:layout_margin="2dp"
         android:layout_marginStart="2dp"
         android:layout_marginTop="2dp"
         android:layout_marginEnd="2dp"
