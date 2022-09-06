@@ -26,4 +26,19 @@ public interface GetDataService {
             @Field("title_name") String title_name,
             @Field("duty_id") Integer duty_id
     );
+
+    // 업무 제목 수정하기
+    @FormUrlEncoded
+    @POST("test5/DutyExample/title_edit.php")
+    Call<DutyTitle> editDutyTitle(
+            @Field("title_id") Integer title_id,
+            @Field("title_name") String title_name
+    );
+
+    // 업무 제목 삭제하기
+    @FormUrlEncoded
+    @POST("test5/DutyExample/title_delete.php")
+    Call<DutyTitle> deleteTitle(
+            @Field("title_id") Integer title_id
+    );
 }

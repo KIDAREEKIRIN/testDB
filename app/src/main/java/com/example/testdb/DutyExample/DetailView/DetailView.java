@@ -13,11 +13,11 @@ import android.widget.Toast;
 
 import com.example.testdb.DutyExample.DTO.DutyTitle;
 import com.example.testdb.DutyExample.DTO.SubItem;
+import com.example.testdb.DutyExample.DetailView.Popup.Popup;
 import com.example.testdb.R;
 import com.example.testdb.Retrofit.GetDataService;
 import com.example.testdb.Retrofit.RetrofitClientInstance;
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -71,11 +71,10 @@ public class DetailView extends AppCompatActivity {
         fab_addTitle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(),Popup.class);
+                Intent intent = new Intent(getApplicationContext(), Popup.class);
                 intent.putExtra("duty_id",duty_id);
                 Log.d(TAG, "duty_id 는? : " + duty_id);
                 startActivity(intent);
-//                intent.putExtra("duty_id")
             }
         });
     }
@@ -127,4 +126,9 @@ public class DetailView extends AppCompatActivity {
         return subItemList;
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        getAllTitles(); // 업무 제목 불러오기.
+    }
 }

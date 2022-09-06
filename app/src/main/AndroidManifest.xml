@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.example.testdb">
+    package="com.example.testdb" >
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -14,9 +14,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.TestDB"
         android:usesCleartextTraffic="true"
-        tools:ignore="UnusedAttribute">
+        tools:ignore="UnusedAttribute" >
         <activity
-            android:name=".DutyExample.DetailView.Popup"
+            android:name=".DutyExample.DetailView.Popup.Popup_Edit"
+            android:exported="true" />
+        <activity
+            android:name=".DutyExample.DetailView.Popup.Popup"
             android:exported="false" />
         <activity
             android:name=".DutyExample.DetailView.DetailView"
@@ -26,7 +29,7 @@
             android:exported="true" />
         <activity
             android:name=".MainActivity"
-            android:exported="true">
+            android:exported="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
