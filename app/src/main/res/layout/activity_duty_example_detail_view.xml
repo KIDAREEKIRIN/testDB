@@ -10,21 +10,21 @@
         android:id="@+id/rv_item"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_above="@+id/fab_addTitle"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="0dp" />
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp" />
 
     <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
         android:id="@+id/fab_addTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/rv_item"
-        android:layout_marginStart="2dp"
-        android:layout_marginTop="2dp"
-        android:layout_marginEnd="2dp"
-        android:layout_marginBottom="2dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="50dp"
         android:padding="2dp"
         android:text="업무 제목 추가하기"
         android:textAlignment="center"
-        android:textSize="22sp" />
+        android:textSize="22sp"
+        app:icon="@drawable/ic_add" />
 
 </RelativeLayout>

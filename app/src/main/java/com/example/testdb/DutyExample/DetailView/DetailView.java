@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -15,6 +16,7 @@ import com.example.testdb.DutyExample.DTO.SubItem;
 import com.example.testdb.R;
 import com.example.testdb.Retrofit.GetDataService;
 import com.example.testdb.Retrofit.RetrofitClientInstance;
+import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
@@ -30,9 +32,11 @@ public class DetailView extends AppCompatActivity {
     Integer duty_id;
     ActionBar actionBar;
 
-    FloatingActionButton fab_addTitle;
+    ExtendedFloatingActionButton fab_addTitle;
 
     List<DutyTitle> dutyTitleList;
+
+    private static String TAG = "넘기는 값";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,6 +72,8 @@ public class DetailView extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(),Popup.class);
+                intent.putExtra("duty_id",duty_id);
+                Log.d(TAG, "duty_id 는? : " + duty_id);
                 startActivity(intent);
 //                intent.putExtra("duty_id")
             }
@@ -112,7 +118,7 @@ public class DetailView extends AppCompatActivity {
 //    }
 
     // 그안에 존재하는 하위 아이템 박스(3개씩 보이는 아이템들)
-    private List<SubItem> buildSubItemList() {
+    public List<SubItem> buildSubItemList() {
         List<SubItem> subItemList = new ArrayList<>();
         for (int i=0; i<3; i++) {
             SubItem subItem = new SubItem("Sub Item "+i);

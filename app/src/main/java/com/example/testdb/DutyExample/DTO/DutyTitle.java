@@ -1,5 +1,6 @@
 package com.example.testdb.DutyExample.DTO;
 
+import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
@@ -11,6 +12,13 @@ public class DutyTitle {
     @SerializedName("title_name") String title_name;
     @SerializedName("title_order") Integer title_order;
     @SerializedName("duty_id") Integer duty_id;
+
+    // CRUD 추가 내용.
+    @Expose
+    @SerializedName("success") private Boolean success;
+
+    @Expose
+    @SerializedName("message") private String message;
 
 //    private String itemTitle;
     // 하위 리사이클러뷰 아이템으로 정의한 subItemList를 전역변수로 선언한다.
@@ -77,5 +85,21 @@ public class DutyTitle {
 
     public void setSubItemList(List<SubItem> subItemList) {
         this.subItemList = subItemList;
+    }
+
+    public Boolean getSuccess() {
+        return success;
+    }
+
+    public void setSuccess(Boolean success) {
+        this.success = success;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
     }
 }
