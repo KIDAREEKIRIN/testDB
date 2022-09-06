@@ -12,7 +12,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.example.testdb.DutyExample.DTO.DutyTitle;
-import com.example.testdb.DutyExample.DTO.SubItem;
+import com.example.testdb.DutyExample.DTO.DutyStep;
 import com.example.testdb.DutyExample.DetailView.Popup.Popup;
 import com.example.testdb.R;
 import com.example.testdb.Retrofit.GetDataService;
@@ -35,6 +35,7 @@ public class DetailView extends AppCompatActivity {
     ExtendedFloatingActionButton fab_addTitle;
 
     List<DutyTitle> dutyTitleList;
+    List<DutyStep> dutyStepList;
 
     private static String TAG = "넘기는 값";
 
@@ -55,14 +56,29 @@ public class DetailView extends AppCompatActivity {
 
         dutyTitleList = new ArrayList<>(); // List 만들기.
 
+        dutyStepList = new ArrayList<>(); // dutyStepList 만들기.
+
         getAllTitles(); // Title 불러오기.
+        getAllSteps(); // Step 불러오기.
         addTitle(); // 업무 제목 추가하기
-        editTitle(); // 업무 제목 수정하기.
 
     }
 
-    private void editTitle() {
+    public void getAllSteps() {
+        GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
+        Call<List<DutyStep>> call = service.getAllDutySteps();
 
+        call.enqueue(new Callback<List<DutyStep>>() {
+            @Override
+            public void onResponse(Call<List<DutyStep>> call, Response<List<DutyStep>> response) {
+                dutyStepList = response.body();
+            }
+
+            @Override
+            public void onFailure(Call<List<DutyStep>> call, Throwable t) {
+                Log.d(TAG, "실패한 이유 : " + t.getLocalizedMessage());
+            }
+        });
     }
 
     // 업무 제목 추가하기.
@@ -117,18 +133,19 @@ public class DetailView extends AppCompatActivity {
 //    }
 
     // 그안에 존재하는 하위 아이템 박스(3개씩 보이는 아이템들)
-    public List<SubItem> buildSubItemList() {
-        List<SubItem> subItemList = new ArrayList<>();
-        for (int i=0; i<3; i++) {
-            SubItem subItem = new SubItem("Sub Item "+i);
-            subItemList.add(subItem);
-        }
-        return subItemList;
-    }
+//    public List<DutyStep> buildSubItemList() {
+//        List<DutyStep> subItemList = new ArrayList<>();
+//        for (int i=0; i<3; i++) {
+//            DutyStep subItem = new DutyStep("Sub Item "+i);
+//            subItemList.add(subItem);
+//        }
+//        return subItemList;
+//    }
 
     @Override
     protected void onResume() {
         super.onResume();
         getAllTitles(); // 업무 제목 불러오기.
+        getAllSteps(); // 업무 단계 불러오기.
     }
 }

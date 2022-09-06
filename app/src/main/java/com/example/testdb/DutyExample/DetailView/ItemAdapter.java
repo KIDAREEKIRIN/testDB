@@ -8,7 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -16,9 +15,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.testdb.DutyExample.DTO.DutyTitle;
-import com.example.testdb.DutyExample.DTO.SubItem;
-import com.example.testdb.DutyExample.DetailView.Popup.Popup;
+import com.example.testdb.DutyExample.DTO.DutyStep;
 import com.example.testdb.DutyExample.DetailView.Popup.Popup_Edit;
+import com.example.testdb.DutyExample.DutyStep.Step_View;
 import com.example.testdb.R;
 import com.example.testdb.Retrofit.GetDataService;
 import com.example.testdb.Retrofit.RetrofitClientInstance;
@@ -33,6 +32,7 @@ import retrofit2.Response;
 public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder> {
 
     List<DutyTitle> dutyTitleList;
+    List<DutyStep> dutyStepList;
 //    Context context;
     private static String TAG = "현재 클릭";
 
@@ -44,7 +44,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
 
         private TextView tvItemTitle;
         private RecyclerView rvSubItem;
-        private ImageButton ib_deleteTitle;
+        private ImageButton ib_deleteTitle, ib_detailStep;
 
         ItemViewHolder(View itemView) {
             super(itemView);
@@ -54,6 +54,8 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
             rvSubItem = itemView.findViewById(R.id.rv_sub_item);
             // 삭제 이미지버튼
             ib_deleteTitle = itemView.findViewById(R.id.ib_deleteTitle);
+            // 업무 단계 자세히보기
+            ib_detailStep = itemView.findViewById(R.id.ib_detailStep);
 
             // TextView 클릭 시,
             tvItemTitle.setOnClickListener(new View.OnClickListener() {
@@ -78,6 +80,32 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
                     }
                 }
             });
+
+            // Detail 버튼 클릭 시,
+            ib_detailStep.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    int pos = getAdapterPosition();
+                    if (pos != RecyclerView.NO_POSITION) {
+                        Integer title_id = dutyTitleList.get(pos).getTitle_id();
+
+                        Intent intent = new Intent(view.getContext(), Step_View.class);
+                        intent.putExtra("title_id",title_id); // title_id 값 보내기.
+                        view.getContext().startActivity(intent);
+                    }
+
+                }
+            });
+
+//            // RecyclerView 클릭 시,
+//            rvSubItem.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View view) {
+//                    Intent intent = new Intent(view.getContext(), Step_View.class);
+//                    view.getContext().startActivity(intent);
+//                }
+//            });
+
 
 //            ib_deleteTitle.setOnClickListener(new View.OnClickListener() {
 //                @Override
@@ -111,7 +139,8 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
         DutyTitle dutyTitle = dutyTitleList.get(i);
         itemViewHolder.tvItemTitle.setText(dutyTitle.getTitle_name()); // 업무 제목 붙이기.
         itemViewHolder.ib_deleteTitle.setTag(dutyTitle.getTitle_id()); // 이미지 버튼에 업무 title_id 붙이기.
-
+        itemViewHolder.ib_detailStep.setTag(dutyTitle.getTitle_id()); // 이미지 버튼(단계 수정)에 업무 title_id 붙이기.
+        // 삭제하기 이미지버튼 클릭 시,
         itemViewHolder.ib_deleteTitle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -137,6 +166,14 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
             }
         });
 
+//        itemViewHolder.rvSubItem.setTag(dutyTitle.getTitle_id());
+//        itemViewHolder.rvSubItem.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Intent intent = new Intent(view.getContext(),)
+//            }
+//        });
+
         // 자식 레이아웃 매니저 설정
         LinearLayoutManager layoutManager = new LinearLayoutManager(
                 itemViewHolder.rvSubItem.getContext(),
@@ -145,10 +182,27 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
         );
 
         // 자식 어답터 설정
-        SubItemAdapter subItemAdapter = new SubItemAdapter(buildSubItemList());
+        dutyStepList = new ArrayList<>(); // dutyStepList 생성.
 
-        itemViewHolder.rvSubItem.setLayoutManager(layoutManager);
-        itemViewHolder.rvSubItem.setAdapter(subItemAdapter);
+        // dutyStepList 불러오기.
+        GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
+        Call<List<DutyStep>> call = service.getAllDutySteps();
+
+        call.enqueue(new Callback<List<DutyStep>>() {
+            @Override
+            public void onResponse(Call<List<DutyStep>> call, Response<List<DutyStep>> response) {
+                dutyStepList = response.body();
+                SubItemAdapter subItemAdapter = new SubItemAdapter(dutyStepList); // dutyStepList 붙이기.
+                itemViewHolder.rvSubItem.setLayoutManager(layoutManager);
+                itemViewHolder.rvSubItem.setAdapter(subItemAdapter);
+            }
+
+            @Override
+            public void onFailure(Call<List<DutyStep>> call, Throwable t) {
+                Log.d(TAG, "실패한 이유 : " + t.getLocalizedMessage());
+            }
+        });
+
     }
 
     @Override
@@ -193,14 +247,14 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
         }
     }
 
-    public List<SubItem> buildSubItemList() {
-        List<SubItem> subItemList = new ArrayList<>();
-        for (int i=0; i<3; i++) {
-            SubItem subItem = new SubItem("Sub Item "+i);
-            subItemList.add(subItem);
-        }
-        return subItemList;
-    }
+//    public List<DutyStep> buildSubItemList() {
+//        List<DutyStep> subItemList = new ArrayList<>();
+//        for (int i=0; i<3; i++) {
+//            DutyStep subItem = new DutyStep("Sub Item "+i);
+//            subItemList.add(subItem);
+//        }
+//        return subItemList;
+//    }
 
 
 }

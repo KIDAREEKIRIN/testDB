@@ -43,6 +43,23 @@ public class DutyExample extends AppCompatActivity {
         getAllDuties(); // Get 업무 이름 데이터
         searchView(); // SearchView 검색.
         buttonCategory(); // Button 카테고리 누르기.
+        // Retrofit 을 통한 데이터 Get.
+        GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
+        Call<List<DutyName>> call = service.getAllDutyNames();
+
+        call.enqueue(new Callback<List<DutyName>>() {
+            @Override
+            public void onResponse(Call<List<DutyName>> call, Response<List<DutyName>> response) {
+                dutyNameList = response.body();
+                generateDataList(dutyNameList);
+            }
+
+            @Override
+            public void onFailure(Call<List<DutyName>> call, Throwable t) {
+                Toast.makeText(getApplicationContext(), "다음에 다시 시도해주세요." + t.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+
 
 
     }
@@ -85,7 +102,7 @@ public class DutyExample extends AppCompatActivity {
             @Override
             public void onResponse(Call<List<DutyName>> call, Response<List<DutyName>> response) {
                 dutyNameList = response.body();
-                generateDataList(response.body());
+
             }
 
             @Override

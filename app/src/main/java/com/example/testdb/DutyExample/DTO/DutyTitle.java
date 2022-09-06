@@ -22,9 +22,9 @@ public class DutyTitle {
 
 //    private String itemTitle;
     // 하위 리사이클러뷰 아이템으로 정의한 subItemList를 전역변수로 선언한다.
-    List<SubItem> subItemList;
+    List<DutyStep> subItemList;
 
-    public DutyTitle(Integer title_id, String title_name, Integer title_order, Integer duty_id, List<SubItem> subItemList) {
+    public DutyTitle(Integer title_id, String title_name, Integer title_order, Integer duty_id, List<DutyStep> subItemList) {
         this.title_id = title_id;
         this.title_name = title_name;
         this.title_order = title_order;
@@ -79,11 +79,11 @@ public class DutyTitle {
         this.duty_id = duty_id;
     }
 
-    public List<SubItem> getSubItemList() {
+    public List<DutyStep> getSubItemList() {
         return subItemList;
     }
 
-    public void setSubItemList(List<SubItem> subItemList) {
+    public void setSubItemList(List<DutyStep> subItemList) {
         this.subItemList = subItemList;
     }
 

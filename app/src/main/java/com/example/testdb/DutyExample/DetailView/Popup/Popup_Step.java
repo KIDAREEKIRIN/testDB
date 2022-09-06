@@ -1,0 +1,86 @@
+package com.example.testdb.DutyExample.DetailView.Popup;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import android.content.Intent;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
+
+import com.example.testdb.DutyExample.DTO.DutyStep;
+import com.example.testdb.R;
+import com.example.testdb.Retrofit.GetDataService;
+import com.example.testdb.Retrofit.RetrofitClientInstance;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
+public class Popup_Step extends AppCompatActivity {
+
+    EditText et_insertStep;
+    Button btn_insertStep, btn_backToDetail_Step;
+
+    Integer title_id;
+    String step_name;
+
+    private static String TAG = "클릭 시";
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_popup_step);
+
+        Intent intent = getIntent();
+        title_id = intent.getIntExtra("title_id",0);
+
+        et_insertStep = findViewById(R.id.et_insertStep);
+        btn_insertStep = findViewById(R.id.btn_insertStep);
+        btn_backToDetail_Step = findViewById(R.id.btn_backToDetail_Step);
+
+        btn_insertStep.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                step_name = et_insertStep.getText().toString();
+                Log.d(TAG, "추가한 데이터 : " + step_name);
+                insertStep(step_name, title_id);
+                finish();
+            }
+        });
+
+        btn_backToDetail_Step.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
+    }
+
+    private void insertStep(String step_name, Integer title_id) {
+        GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
+        Call<DutyStep> call = service.insertStep(step_name, title_id);
+
+        call.enqueue(new Callback<DutyStep>() {
+            @Override
+            public void onResponse(Call<DutyStep> call, Response<DutyStep> response) {
+                if(response.isSuccessful() && response.body() != null) {
+                    Boolean success = response.body().getSuccess();
+                    if(success) {
+                        Toast.makeText(getApplicationContext(), "업무 단계 추가 성공!", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(getApplicationContext(), "서버와 통신했으나 메세지 못 불러옴." +response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<DutyStep> call, Throwable t) {
+                Toast.makeText(getApplicationContext(), "실패", Toast.LENGTH_SHORT).show();
+                Log.d(TAG, "실패한 이유: " + t.getLocalizedMessage());
+            }
+        });
+    }
+}

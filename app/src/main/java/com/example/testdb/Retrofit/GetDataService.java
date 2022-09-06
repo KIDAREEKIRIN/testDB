@@ -1,6 +1,7 @@
 package com.example.testdb.Retrofit;
 
 import com.example.testdb.DutyExample.DTO.DutyName;
+import com.example.testdb.DutyExample.DTO.DutyStep;
 import com.example.testdb.DutyExample.DTO.DutyTitle;
 
 import java.util.List;
@@ -39,6 +40,18 @@ public interface GetDataService {
     @FormUrlEncoded
     @POST("test5/DutyExample/title_delete.php")
     Call<DutyTitle> deleteTitle(
+            @Field("title_id") Integer title_id
+    );
+
+    // 업무 단계 조회하기.
+    @GET("test5/DutyExample/step_read.php")
+    Call<List<DutyStep>> getAllDutySteps();
+
+    // 업무 단계 추가하기.
+    @FormUrlEncoded
+    @POST("test5/DutyExample/step_insert.php")
+    Call<DutyStep> insertStep(
+            @Field("step_name") String step_name,
             @Field("title_id") Integer title_id
     );
 }
