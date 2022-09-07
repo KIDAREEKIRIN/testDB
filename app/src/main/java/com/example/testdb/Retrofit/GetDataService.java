@@ -54,4 +54,10 @@ public interface GetDataService {
             @Field("step_name") String step_name,
             @Field("title_id") Integer title_id
     );
+
+    @FormUrlEncoded
+    @POST("test5/DutyExample/steps_read.php")
+    Call<List<DutyStep>> getSteps(
+            @Field("title_id") Integer title_id
+    );
 }

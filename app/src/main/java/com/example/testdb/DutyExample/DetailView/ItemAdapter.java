@@ -96,33 +96,6 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
 
                 }
             });
-
-//            // RecyclerView 클릭 시,
-//            rvSubItem.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View view) {
-//                    Intent intent = new Intent(view.getContext(), Step_View.class);
-//                    view.getContext().startActivity(intent);
-//                }
-//            });
-
-
-//            ib_deleteTitle.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View view) {
-//
-//                }
-//            });
-
-//            itemView.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View view) {
-//                    int nowPos = getAdapterPosition();
-//                    if(nowPos != RecyclerView.NO_POSITION) {
-//
-//                    }
-//                }
-//            });
         }
     }
 
@@ -166,14 +139,6 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
             }
         });
 
-//        itemViewHolder.rvSubItem.setTag(dutyTitle.getTitle_id());
-//        itemViewHolder.rvSubItem.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Intent intent = new Intent(view.getContext(),)
-//            }
-//        });
-
         // 자식 레이아웃 매니저 설정
         LinearLayoutManager layoutManager = new LinearLayoutManager(
                 itemViewHolder.rvSubItem.getContext(),
@@ -192,10 +157,50 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
             @Override
             public void onResponse(Call<List<DutyStep>> call, Response<List<DutyStep>> response) {
                 dutyStepList = response.body();
-                SubItemAdapter subItemAdapter = new SubItemAdapter(dutyStepList); // dutyStepList 붙이기.
-                itemViewHolder.rvSubItem.setLayoutManager(layoutManager);
-                itemViewHolder.rvSubItem.setAdapter(subItemAdapter);
-            }
+
+                    GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
+                    Call<List<DutyStep>> call2 = service.getSteps(dutyTitle.getTitle_id());
+
+                    // title_order 값에 따라 달라지기.
+                    call2.enqueue(new Callback<List<DutyStep>>() {
+                        @Override
+                        public void onResponse(Call<List<DutyStep>> call, Response<List<DutyStep>> response) {
+                            List<DutyStep> step1List = response.body();
+                            step1List = response.body();
+                            Log.d(TAG, "해당 리스트는? : " + step1List);
+
+                            // 해당하는 title_id 가 같으면 항목을 출력한다.
+                            for (int i = 0; i<=dutyStepList.size(); i++) {
+                                if(dutyTitle.getTitle_id() < i) {
+                                    SubItemAdapter subItemAdapter = new SubItemAdapter(step1List); // dutyStepList 붙이기.
+                                    itemViewHolder.rvSubItem.setLayoutManager(layoutManager);
+                                    itemViewHolder.rvSubItem.setAdapter(subItemAdapter);
+                                } else {
+                                    SubItemAdapter subItemAdapter = new SubItemAdapter(dutyStepList); // dutyStepList 붙이기.
+                                    itemViewHolder.rvSubItem.setLayoutManager(layoutManager);
+                                    itemViewHolder.rvSubItem.setAdapter(subItemAdapter);
+                                }
+                            }
+
+//                            if(dutyTitle.getTitle_id()  == 2) {
+//                                SubItemAdapter subItemAdapter = new SubItemAdapter(step1List); // dutyStepList 붙이기.
+//                                itemViewHolder.rvSubItem.setLayoutManager(layoutManager);
+//                                itemViewHolder.rvSubItem.setAdapter(subItemAdapter);
+//                            } else {
+//                                SubItemAdapter subItemAdapter = new SubItemAdapter(dutyStepList); // dutyStepList 붙이기.
+//                                itemViewHolder.rvSubItem.setLayoutManager(layoutManager);
+//                                itemViewHolder.rvSubItem.setAdapter(subItemAdapter);
+//                            }
+
+
+                        }
+
+                        @Override
+                        public void onFailure(Call<List<DutyStep>> call, Throwable t) {
+                            Log.d(TAG, "통신 실패한 이유 : " + t.getLocalizedMessage());
+                        }
+                    });
+                }
 
             @Override
             public void onFailure(Call<List<DutyStep>> call, Throwable t) {

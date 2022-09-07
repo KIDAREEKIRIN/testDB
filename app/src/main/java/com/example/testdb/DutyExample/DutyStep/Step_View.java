@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.View;
 
 import com.example.testdb.DutyExample.DTO.DutyStep;
+import com.example.testdb.DutyExample.DTO.DutyTitle;
 import com.example.testdb.DutyExample.DetailView.Popup.Popup_Step;
 import com.example.testdb.DutyExample.DetailView.SubItemAdapter;
 import com.example.testdb.R;
@@ -30,6 +31,8 @@ public class Step_View extends AppCompatActivity {
     LinearLayoutManager linearLayoutManager;
     SubItemAdapter subItemAdapter;
     List<DutyStep> dutyStepList;
+
+    List<DutyTitle> dutyTitleList;
 
     ExtendedFloatingActionButton fab_addStep;
 
@@ -76,6 +79,8 @@ public class Step_View extends AppCompatActivity {
             @Override
             public void onResponse(Call<List<DutyStep>> call, Response<List<DutyStep>> response) {
                 dutyStepList = response.body();
+
+
                 subItemAdapter = new SubItemAdapter(dutyStepList);
                 rv_dutyStep.setLayoutManager(linearLayoutManager);
                 rv_dutyStep.setAdapter(subItemAdapter);

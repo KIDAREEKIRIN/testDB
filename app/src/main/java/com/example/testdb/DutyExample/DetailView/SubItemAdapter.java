@@ -1,5 +1,6 @@
 package com.example.testdb.DutyExample.DetailView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +24,8 @@ import retrofit2.Response;
 public class SubItemAdapter extends RecyclerView.Adapter<SubItemAdapter.SubItemViewHolder> {
 
     List<DutyStep> dutyStepList;
+
+    private static String TAG = "클릭하면";
 
     public SubItemAdapter(List<DutyStep> dutyStepList) {
         this.dutyStepList = dutyStepList;
@@ -59,7 +62,6 @@ public class SubItemAdapter extends RecyclerView.Adapter<SubItemAdapter.SubItemV
             @Override
             public void onResponse(Call<List<DutyStep>> call, Response<List<DutyStep>> response) {
                 dutyStepList = response.body();
-                dutyStepList = new ArrayList<>();
             }
 
             @Override
