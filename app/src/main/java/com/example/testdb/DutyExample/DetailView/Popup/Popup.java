@@ -47,13 +47,9 @@ public class Popup extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 title_name = et_insertTitle.getText().toString(); // 업무 제목
-//                Intent intent = new Intent(getApplicationContext(), DetailView.class);
-//                // EditText 값 + title_order + duty_id 값.
-//                intent.putExtra("addTitle",title_name); // editText 에 입력한 값
                 Log.d(TAG, "추가한 데이터 : " + title_name);
                 insertTitle(title_name,duty_id); // Retrofit2 을 통한 title_name, duty_id 추가
                 finish(); // 끝내기
-//                startActivity(intent);
             }
         });
 
@@ -63,10 +59,6 @@ public class Popup extends AppCompatActivity {
                 finish();
             }
         });
-
-
-
-
 
     }
     // 업무 제목 title_name + duty_id 추가하기

@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -31,6 +32,7 @@ public class DetailView extends AppCompatActivity {
     String duty_name, addTitle;
     Integer duty_id;
     ActionBar actionBar;
+    Context context;
 
     ExtendedFloatingActionButton fab_addTitle;
 
@@ -48,7 +50,7 @@ public class DetailView extends AppCompatActivity {
         Intent intent = getIntent();
         duty_id = intent.getIntExtra("duty_id",0); // duty_id 받아온 값 넣기.
         duty_name = intent.getStringExtra("duty_name"); // duty_name 받아온 값 넣기.
-        addTitle = intent.getStringExtra("addTitle"); // Popup 창에서 추가한 업무 제목.
+//        addTitle = intent.getStringExtra("addTitle"); // Popup 창에서 추가한 업무 제목.
 
         actionBar = getSupportActionBar();
         assert actionBar != null; // setTitle 을 넣기 위한 방법.
@@ -56,12 +58,10 @@ public class DetailView extends AppCompatActivity {
 
         dutyTitleList = new ArrayList<>(); // List 만들기.
 
-        dutyStepList = new ArrayList<>(); // dutyStepList 만들기.
-
-        getAllTitles(); // Title 불러오기.
-        getAllSteps(); // Step 불러오기.
-        addTitle(); // 업무 제목 추가하기
-
+        /* 받아온 duty_id 값. duty_id 1 야영수련활동 2 수학여행*/
+            getAllTitles(); // Title 불러오기.
+//            getAllSteps();// Step 불러오기.
+            addTitle(); // 업무 제목 추가하기
     }
 
     public void getAllSteps() {
@@ -95,7 +95,7 @@ public class DetailView extends AppCompatActivity {
         });
     }
 
-    private void getAllTitles() {
+    public void getAllTitles() {
         GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
         Call<List<DutyTitle>> call = service.getAllTitles();
 
@@ -103,7 +103,12 @@ public class DetailView extends AppCompatActivity {
             @Override
             public void onResponse(Call<List<DutyTitle>> call, Response<List<DutyTitle>> response) {
                 dutyTitleList = response.body();
-                Double_RecyclerView(response.body());
+                // 상위 리사이클러뷰 설정.
+                RecyclerView rvItem = findViewById(R.id.rv_item);
+                LinearLayoutManager layoutManager = new LinearLayoutManager(context);
+                ItemAdapter itemAdapter = new ItemAdapter(dutyTitleList);
+                rvItem.setLayoutManager(layoutManager);
+                rvItem.setAdapter(itemAdapter);
             }
 
             @Override
@@ -113,39 +118,22 @@ public class DetailView extends AppCompatActivity {
         });
     }
 
-    private void Double_RecyclerView(List<DutyTitle> dutyTitleList) {
-        // 상위 리사이클러뷰 설정.
-        RecyclerView rvItem = findViewById(R.id.rv_item);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(DetailView.this);
-        ItemAdapter itemAdapter = new ItemAdapter(dutyTitleList);
-        rvItem.setLayoutManager(layoutManager);
-        rvItem.setAdapter(itemAdapter);
-    }
-
-    // 상위아이템 큰박스 아이템을 10개 만듭니다.
-//    private List<DutyTitle> buildItemList() {
-//        List<DutyTitle> itemList = new ArrayList<>();
-//        for (int i=0; i<10; i++) {
-//            DutyTitle dutyTitle = new DutyTitle("Item "+i, buildSubItemList()); // 아이템 제목, SubItem List.
-//            itemList.add(item);
-//        }
-//        return itemList;
+//    private void Double_RecyclerView(List<DutyTitle> dutyTitleList) {
+//        // 상위 리사이클러뷰 설정.
+//        RecyclerView rvItem = findViewById(R.id.rv_item);
+//        LinearLayoutManager layoutManager = new LinearLayoutManager(DetailView.this);
+//        ItemAdapter itemAdapter = new ItemAdapter(dutyTitleList);
+//        rvItem.setLayoutManager(layoutManager);
+//        rvItem.setAdapter(itemAdapter);
 //    }
 
-    // 그안에 존재하는 하위 아이템 박스(3개씩 보이는 아이템들)
-//    public List<DutyStep> buildSubItemList() {
-//        List<DutyStep> subItemList = new ArrayList<>();
-//        for (int i=0; i<3; i++) {
-//            DutyStep subItem = new DutyStep("Sub Item "+i);
-//            subItemList.add(subItem);
-//        }
-//        return subItemList;
-//    }
+
 
     @Override
     protected void onResume() {
         super.onResume();
         getAllTitles(); // 업무 제목 불러오기.
-        getAllSteps(); // 업무 단계 불러오기.
+//        getAllSteps(); // 업무 단계 불러오기.
+//        addTitle(); // 업무 추가하기.
     }
 }

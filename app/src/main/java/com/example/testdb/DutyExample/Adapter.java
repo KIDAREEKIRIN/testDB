@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
@@ -23,6 +24,9 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
     Context context;
     List<DutyName> dutyNameList;
     ClickListener mListener = null;
+
+    String duty_name;
+    Integer duty_id;
 
     private static String TAG = "데이터 궁금하지?";
 
@@ -46,14 +50,20 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
                 @Override
                 public void onClick(View view) {
                     int pos = getAdapterPosition(); // 포지션 값
-                    if ( pos != RecyclerView.NO_POSITION) {
+                    if ( pos != RecyclerView.NO_POSITION) { // 포지션 값이 -1 이 아니면,
                         // 리스너 객체의 메서드 호출.
                         // 해당 클릭 포지션의 dutyName 담아서 보내기.
+                        duty_id = dutyNameList.get(pos).getDuty_id();
+                        duty_name = dutyNameList.get(pos).getDuty_name();
                         Intent intent = new Intent(context, DetailView.class);
-                        intent.putExtra("duty_id", dutyNameList.get(pos).getDuty_id());
-                        intent.putExtra("duty_name", dutyNameList.get(pos).getDuty_name()); // 업무 이름 넘기기
-                        Log.d(TAG, "클릭한 데이터의 : getDuty_name() " +  dutyNameList.get(pos).getDuty_name());
-                        context.startActivity(intent);
+                        intent.putExtra("duty_id", duty_id); // duty_id 넘기기.
+                        intent.putExtra("duty_name", duty_name); // 업무 이름 넘기기
+                        Log.d(TAG, "클릭한 데이터의 : 업무이름 " +  duty_name);
+                        if(duty_id == 1) {
+                            context.startActivity(intent);
+                        } else {
+                            Toast.makeText(context.getApplicationContext(), "데이터가 없습니다", Toast.LENGTH_SHORT).show();
+                        }
                     }
                 }
             });

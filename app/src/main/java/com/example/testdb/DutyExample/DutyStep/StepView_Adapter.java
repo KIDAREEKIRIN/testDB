@@ -46,6 +46,7 @@ public class StepView_Adapter extends RecyclerView.Adapter<StepView_Adapter.Step
     public void onBindViewHolder(@NonNull StepView_Adapter.StepViewHolder holder, int position) {
         DutyStep dutyStep = dutyStepList.get(position);
         holder.tv_dutyStep.setText(dutyStep.getStep_name());
+
     }
 
     @Override

@@ -34,20 +34,22 @@ public class Popup_Step extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_popup_step);
 
+        // Intent 값 받기.
         Intent intent = getIntent();
         title_id = intent.getIntExtra("title_id",0);
 
-        et_insertStep = findViewById(R.id.et_insertStep);
-        btn_insertStep = findViewById(R.id.btn_insertStep);
-        btn_backToDetail_Step = findViewById(R.id.btn_backToDetail_Step);
+        et_insertStep = findViewById(R.id.et_insertStep); // 업무 단계 추가.
+        btn_insertStep = findViewById(R.id.btn_insertStep); // 업무 추가하기 버튼.
+        btn_backToDetail_Step = findViewById(R.id.btn_backToDetail_Step); // 돌아가기.
 
+        // 업무 단계 추가하기 버튼 클릭.
         btn_insertStep.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 step_name = et_insertStep.getText().toString();
                 Log.d(TAG, "추가한 데이터 : " + step_name);
-                insertStep(step_name, title_id);
-                finish();
+                insertStep(step_name, title_id); // DB 에 Insert 완료.
+                finish(); // 종료.
             }
         });
 

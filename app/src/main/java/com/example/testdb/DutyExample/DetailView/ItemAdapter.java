@@ -17,10 +17,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.testdb.DutyExample.DTO.DutyTitle;
 import com.example.testdb.DutyExample.DTO.DutyStep;
 import com.example.testdb.DutyExample.DetailView.Popup.Popup_Edit;
+import com.example.testdb.DutyExample.DetailView.Popup.Popup_Step;
 import com.example.testdb.DutyExample.DutyStep.Step_View;
 import com.example.testdb.R;
 import com.example.testdb.Retrofit.GetDataService;
 import com.example.testdb.Retrofit.RetrofitClientInstance;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,7 +35,11 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
 
     List<DutyTitle> dutyTitleList;
     List<DutyStep> dutyStepList;
-//    Context context;
+    String title_name;
+    Integer duty_id, title_id;
+
+//    SubItemAdapter subItemAdapter;// dutyStepList 전체 붙이기.
+
     private static String TAG = "현재 클릭";
 
     public ItemAdapter(List<DutyTitle> dutyTitleList) {
@@ -42,9 +48,9 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
 
     public class ItemViewHolder extends RecyclerView.ViewHolder {
 
-        private TextView tvItemTitle;
-        private RecyclerView rvSubItem;
-        private ImageButton ib_deleteTitle, ib_detailStep;
+        TextView tvItemTitle;
+        RecyclerView rvSubItem;
+        ImageButton ib_deleteTitle, ib_detailStep;
 
         ItemViewHolder(View itemView) {
             super(itemView);
@@ -56,6 +62,8 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
             ib_deleteTitle = itemView.findViewById(R.id.ib_deleteTitle);
             // 업무 단계 자세히보기
             ib_detailStep = itemView.findViewById(R.id.ib_detailStep);
+            // 업무 단계 추가하기
+//            fab_addStep = itemView.findViewById(R.id.fab_addStep);
 
             // TextView 클릭 시,
             tvItemTitle.setOnClickListener(new View.OnClickListener() {
@@ -63,19 +71,15 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
                 public void onClick(View view) {
                     int pos = getAdapterPosition();
                     if (pos != RecyclerView.NO_POSITION) {
-                        String title_name = dutyTitleList.get(pos).getTitle_name();
-                        Integer duty_id = dutyTitleList.get(pos).getDuty_id();
-                        Integer title_id = dutyTitleList.get(pos).getTitle_id();
-
                         Log.d(TAG, "현재 포지션 : " + pos);
                         Log.d(TAG, "현재 title_name : " + title_name);
                         Log.d(TAG, "현재 duty_id : " + duty_id);
 
                         // 수정하는 Popup_Edit 으로 보내서, title_name, duty_id 값을 같이 보내기.
                         Intent intent = new Intent(view.getContext(), Popup_Edit.class);
-                        intent.putExtra("title_name",title_name); // title_name 값을 담아서 보내기.
-                        intent.putExtra("duty_id",duty_id); // duty_id 값을 담아서 보내기.
-                        intent.putExtra("title_id",title_id); // title_id 값을 담아서 보내기.
+                        intent.putExtra("title_name",dutyTitleList.get(pos).getTitle_name()); // title_name 값을 담아서 보내기.
+                        intent.putExtra("duty_id",dutyTitleList.get(pos).getDuty_id()); // duty_id 값을 담아서 보내기.
+                        intent.putExtra("title_id",dutyTitleList.get(pos).getTitle_id()); // title_id 값을 담아서 보내기.
                         view.getContext().startActivity(intent);
                     }
                 }
@@ -87,15 +91,35 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
                 public void onClick(View view) {
                     int pos = getAdapterPosition();
                     if (pos != RecyclerView.NO_POSITION) {
-                        Integer title_id = dutyTitleList.get(pos).getTitle_id();
+
+                        title_name = dutyTitleList.get(pos).getTitle_name();
+                        title_id = dutyTitleList.get(pos).getTitle_id(); // title_id 값 넣기.
 
                         Intent intent = new Intent(view.getContext(), Step_View.class);
                         intent.putExtra("title_id",title_id); // title_id 값 보내기.
+                        intent.putExtra("title_name", title_name); // title_name 값 보내기.
                         view.getContext().startActivity(intent);
                     }
 
                 }
             });
+
+//            // 업무 단계 추가 버튼 클릭 시,
+//            fab_addStep.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View view) {
+//                    int pos = getAdapterPosition();
+//                    if(pos != RecyclerView.NO_POSITION) {
+//
+//                        title_id = dutyTitleList.get(pos).getTitle_id(); // title_id 값 넣기.
+//
+//                        Intent intent = new Intent(view.getContext(), Popup_Step.class);
+//                        intent.putExtra("title_id", title_id);
+//                        Log.d(TAG, "업무 추가하기 버튼 클릭시, " + title_id);
+//                        view.getContext().startActivity(intent);
+//                    }
+//                }
+//            });
         }
     }
 
@@ -113,7 +137,9 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
         itemViewHolder.tvItemTitle.setText(dutyTitle.getTitle_name()); // 업무 제목 붙이기.
         itemViewHolder.ib_deleteTitle.setTag(dutyTitle.getTitle_id()); // 이미지 버튼에 업무 title_id 붙이기.
         itemViewHolder.ib_detailStep.setTag(dutyTitle.getTitle_id()); // 이미지 버튼(단계 수정)에 업무 title_id 붙이기.
-        // 삭제하기 이미지버튼 클릭 시,
+
+
+        // 삭제하기 이미지버튼 클릭 시, Retrofit2 DELETE
         itemViewHolder.ib_deleteTitle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -124,7 +150,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
                     public void onClick(DialogInterface dialog, int i) {
                         Integer title_id = dutyTitle.getTitle_id();
                         remove(itemViewHolder.getAdapterPosition());
-                        deleteTitle(title_id);
+                        deleteTitle(title_id); // Retrofit 삭제하기.
                         notifyDataSetChanged();
                         dialog.dismiss();
                     }
@@ -146,8 +172,11 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
                 false
         );
 
+
+
         // 자식 어답터 설정
-        dutyStepList = new ArrayList<>(); // dutyStepList 생성.
+//        dutyStepList = new ArrayList<>(); // dutyStepList 생성.
+
 
         // dutyStepList 불러오기.
         GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
@@ -156,50 +185,44 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
         call.enqueue(new Callback<List<DutyStep>>() {
             @Override
             public void onResponse(Call<List<DutyStep>> call, Response<List<DutyStep>> response) {
-                dutyStepList = response.body();
+//
+                dutyStepList = response.body(); // 업무 단계 List 받으면.
 
-                    GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
-                    Call<List<DutyStep>> call2 = service.getSteps(dutyTitle.getTitle_id());
+                GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
+                Call<List<DutyStep>> call2 = service.getSteps(dutyTitle.getTitle_id());
 
-                    // title_order 값에 따라 달라지기.
-                    call2.enqueue(new Callback<List<DutyStep>>() {
-                        @Override
-                        public void onResponse(Call<List<DutyStep>> call, Response<List<DutyStep>> response) {
-                            List<DutyStep> step1List = response.body();
-                            step1List = response.body();
-                            Log.d(TAG, "해당 리스트는? : " + step1List);
+                // title_order 값에 따라 달라지기.
+                call2.enqueue(new Callback<List<DutyStep>>() {
+                    @Override
+                    public void onResponse(Call<List<DutyStep>> call, Response<List<DutyStep>> response) {
 
-                            // 해당하는 title_id 가 같으면 항목을 출력한다.
-                            for (int i = 0; i<=dutyStepList.size(); i++) {
-                                if(dutyTitle.getTitle_id() < i) {
-                                    SubItemAdapter subItemAdapter = new SubItemAdapter(step1List); // dutyStepList 붙이기.
-                                    itemViewHolder.rvSubItem.setLayoutManager(layoutManager);
-                                    itemViewHolder.rvSubItem.setAdapter(subItemAdapter);
-                                } else {
-                                    SubItemAdapter subItemAdapter = new SubItemAdapter(dutyStepList); // dutyStepList 붙이기.
-                                    itemViewHolder.rvSubItem.setLayoutManager(layoutManager);
-                                    itemViewHolder.rvSubItem.setAdapter(subItemAdapter);
-                                }
+//                        dutyStepList = response.body(); // 업무 단계 List 받으면.
+                        List<DutyStep> step1List = response.body(); // 해당되는 List 만 받기.
+                        step1List = response.body(); // List 받으면?.
+                        Log.d(TAG, "해당 리스트는? : " + step1List);
+                        // 해당하는 title_id 가 같으면 항목을 출력한다
+                        SubItemAdapter subItemAdapter;// dutyStepList 전체 붙이기.
+                        for (int i = 0; i <= dutyStepList.size(); i++) {
+                            if(dutyTitle.getTitle_id() == i) {
+                                subItemAdapter = new SubItemAdapter(step1List);
+                                itemViewHolder.rvSubItem.setLayoutManager(layoutManager);
+                                itemViewHolder.rvSubItem.setAdapter(subItemAdapter);
                             }
-
-//                            if(dutyTitle.getTitle_id()  == 2) {
-//                                SubItemAdapter subItemAdapter = new SubItemAdapter(step1List); // dutyStepList 붙이기.
-//                                itemViewHolder.rvSubItem.setLayoutManager(layoutManager);
-//                                itemViewHolder.rvSubItem.setAdapter(subItemAdapter);
-//                            } else {
-//                                SubItemAdapter subItemAdapter = new SubItemAdapter(dutyStepList); // dutyStepList 붙이기.
-//                                itemViewHolder.rvSubItem.setLayoutManager(layoutManager);
-//                                itemViewHolder.rvSubItem.setAdapter(subItemAdapter);
+//                            else {
+//                                subItemAdapter = new SubItemAdapter(dutyStepList);
 //                            }
 
-
                         }
 
-                        @Override
-                        public void onFailure(Call<List<DutyStep>> call, Throwable t) {
-                            Log.d(TAG, "통신 실패한 이유 : " + t.getLocalizedMessage());
-                        }
-                    });
+
+                    }
+
+                    @Override
+                    public void onFailure(Call<List<DutyStep>> call, Throwable t) {
+                        Log.d(TAG, "통신 실패한 이유 : " + t.getLocalizedMessage());
+                    }
+                });
+
                 }
 
             @Override
@@ -207,7 +230,6 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
                 Log.d(TAG, "실패한 이유 : " + t.getLocalizedMessage());
             }
         });
-
     }
 
     @Override
@@ -215,6 +237,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
         return dutyTitleList.size();
     }
 
+    // Retrofit2 삭제하기 delete.
     private void deleteTitle(Integer title_id) {
         GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
         Call<DutyTitle> call = service.deleteTitle(title_id);
@@ -225,10 +248,8 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
                 if(response.isSuccessful() && response.body() != null) {
                     boolean success = response.body().getSuccess();
                     if(success) {
-//                        Toast.makeText(view.getContext(), "통신 + 삭제완료.", Toast.LENGTH_SHORT).show();
                         Log.d(TAG, "응답하면? = 통신 + 삭제 완료. ");
                     } else {
-//                        Toast.makeText(view.getContext(), "통신만 됨.", Toast.LENGTH_SHORT).show();
                         Log.d(TAG, "응답은 했으나 삭제는 불가능.");
                     }
                 }
@@ -236,7 +257,6 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
 
             @Override
             public void onFailure(Call<DutyTitle> call, Throwable t) {
-//                Toast.makeText(view.getContext(), "통신불가", Toast.LENGTH_SHORT).show();
                 Log.d(TAG, "실패한 이유 : " + t.getLocalizedMessage());
             }
         });
@@ -251,15 +271,5 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
             ex.printStackTrace();
         }
     }
-
-//    public List<DutyStep> buildSubItemList() {
-//        List<DutyStep> subItemList = new ArrayList<>();
-//        for (int i=0; i<3; i++) {
-//            DutyStep subItem = new DutyStep("Sub Item "+i);
-//            subItemList.add(subItem);
-//        }
-//        return subItemList;
-//    }
-
 
 }

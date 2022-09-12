@@ -23,7 +23,7 @@ import retrofit2.Response;
 
 public class SubItemAdapter extends RecyclerView.Adapter<SubItemAdapter.SubItemViewHolder> {
 
-    List<DutyStep> dutyStepList;
+    List<DutyStep> dutyStepList; // 업무 제목.
 
     private static String TAG = "클릭하면";
 
@@ -51,24 +51,8 @@ public class SubItemAdapter extends RecyclerView.Adapter<SubItemAdapter.SubItemV
     @Override
     public void onBindViewHolder(@NonNull SubItemViewHolder subItemViewHolder, int i) {
         DutyStep dutyStep = dutyStepList.get(i);
-        subItemViewHolder.tvSubItemTitle.setText(dutyStep.getStep_name());// step_name 붙이기.
+        subItemViewHolder.tvSubItemTitle.setText(dutyStep.getStep_name());// step_name 붙이기
 
-//        dutyStepList = new ArrayList<>();
-
-        GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
-        Call<List<DutyStep>> call = service.getAllDutySteps();
-
-        call.enqueue(new Callback<List<DutyStep>>() {
-            @Override
-            public void onResponse(Call<List<DutyStep>> call, Response<List<DutyStep>> response) {
-                dutyStepList = response.body();
-            }
-
-            @Override
-            public void onFailure(Call<List<DutyStep>> call, Throwable t) {
-
-            }
-        });
     }
 
     @Override

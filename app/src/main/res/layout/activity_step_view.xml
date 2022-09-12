@@ -10,13 +10,13 @@
         android:id="@+id/rv_dutyStep"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/fab_addStep"
+        android:layout_above="@+id/extendFab_addStep"
         android:layout_alignParentTop="true"
         android:layout_marginTop="20dp"
         android:layout_marginBottom="20dp" />
 
     <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-        android:id="@+id/fab_addStep"
+        android:id="@+id/extendFab_addStep"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
