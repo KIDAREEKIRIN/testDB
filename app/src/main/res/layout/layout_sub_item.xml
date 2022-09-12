@@ -7,10 +7,10 @@
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="12dp">
+        android:layout_margin="6dp">
 
         <LinearLayout
-            android:layout_margin="4dp"
+            android:layout_margin="2dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
@@ -22,7 +22,7 @@
                     android:layout_weight="1"
                     android:textSize="24sp"
                     android:textStyle="bold"
-                    android:layout_margin="4dp"
+                    android:layout_margin="2dp"
                     android:text="Sub item title"/>
 
         </LinearLayout>

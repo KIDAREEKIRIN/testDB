@@ -30,7 +30,8 @@ public class Step_View extends AppCompatActivity {
 
     RecyclerView rv_dutyStep;
     LinearLayoutManager linearLayoutManager;
-    SubItemAdapter subItemAdapter;
+//    SubItemAdapter subItemAdapter;
+    StepView_Adapter stepView_adapter;
     List<DutyStep> dutyStepList;
 
     ActionBar actionBar;
@@ -61,26 +62,27 @@ public class Step_View extends AppCompatActivity {
         linearLayoutManager = new LinearLayoutManager(Step_View.this);
 
 //        dutyStepList = new ArrayList<>();
-
-        GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
-        Call<List<DutyStep>> call = service.getSteps(title_id);
-
-        call.enqueue(new Callback<List<DutyStep>>() {
-            @Override
-            public void onResponse(Call<List<DutyStep>> call, Response<List<DutyStep>> response) {
-                dutyStepList = response.body();
-
-                subItemAdapter = new SubItemAdapter(dutyStepList);
-                rv_dutyStep.setLayoutManager(linearLayoutManager);
-                rv_dutyStep.setAdapter(subItemAdapter);
-
-            }
-
-            @Override
-            public void onFailure(Call<List<DutyStep>> call, Throwable t) {
-
-            }
-        });
+//
+//        GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
+//        Call<List<DutyStep>> call = service.getSteps(title_id);
+//
+//        call.enqueue(new Callback<List<DutyStep>>() {
+//            @Override
+//            public void onResponse(Call<List<DutyStep>> call, Response<List<DutyStep>> response) {
+//                dutyStepList = response.body();
+//
+//                stepView_adapter = new StepView_Adapter(dutyStepList);
+////                subItemAdapter = new SubItemAdapter(dutyStepList);
+//                rv_dutyStep.setLayoutManager(linearLayoutManager);
+//                rv_dutyStep.setAdapter(stepView_adapter);
+//
+//            }
+//
+//            @Override
+//            public void onFailure(Call<List<DutyStep>> call, Throwable t) {
+//
+//            }
+//        });
 
         getAllSteps(); // 업무 단계 전부 불러오기.
         addStep(); // 업무 단계 추가하기.
@@ -109,9 +111,9 @@ public class Step_View extends AppCompatActivity {
             public void onResponse(Call<List<DutyStep>> call, Response<List<DutyStep>> response) {
                 dutyStepList = response.body();
 
-                subItemAdapter = new SubItemAdapter(dutyStepList);
+                stepView_adapter = new StepView_Adapter(dutyStepList);
                 rv_dutyStep.setLayoutManager(linearLayoutManager);
-                rv_dutyStep.setAdapter(subItemAdapter);
+                rv_dutyStep.setAdapter(stepView_adapter);
 
             }
 

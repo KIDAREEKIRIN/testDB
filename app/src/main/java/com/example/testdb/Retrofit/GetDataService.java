@@ -55,9 +55,18 @@ public interface GetDataService {
             @Field("title_id") Integer title_id
     );
 
+    // Title_step 리스트 표현하기.
     @FormUrlEncoded
     @POST("test5/DutyExample/steps_read.php")
     Call<List<DutyStep>> getSteps(
             @Field("title_id") Integer title_id
+    );
+
+    // 체크박스 Post 관련.
+    @FormUrlEncoded
+    @POST("test5/DutyExample/update_check.php")
+    Call<DutyStep> updateCheck(
+            @Field("step_id") Integer step_id,
+            @Field("step_check") Integer step_check
     );
 }
