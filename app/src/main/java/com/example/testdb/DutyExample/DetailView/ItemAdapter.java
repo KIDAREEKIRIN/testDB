@@ -38,8 +38,6 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
     String title_name;
     Integer duty_id, title_id;
 
-//    SubItemAdapter subItemAdapter;// dutyStepList 전체 붙이기.
-
     private static String TAG = "현재 클릭";
 
     public ItemAdapter(List<DutyTitle> dutyTitleList) {
@@ -104,22 +102,6 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
                 }
             });
 
-//            // 업무 단계 추가 버튼 클릭 시,
-//            fab_addStep.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View view) {
-//                    int pos = getAdapterPosition();
-//                    if(pos != RecyclerView.NO_POSITION) {
-//
-//                        title_id = dutyTitleList.get(pos).getTitle_id(); // title_id 값 넣기.
-//
-//                        Intent intent = new Intent(view.getContext(), Popup_Step.class);
-//                        intent.putExtra("title_id", title_id);
-//                        Log.d(TAG, "업무 추가하기 버튼 클릭시, " + title_id);
-//                        view.getContext().startActivity(intent);
-//                    }
-//                }
-//            });
         }
     }
 
@@ -172,12 +154,6 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
                 false
         );
 
-
-
-        // 자식 어답터 설정
-//        dutyStepList = new ArrayList<>(); // dutyStepList 생성.
-
-
         // dutyStepList 불러오기.
         GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
         Call<List<DutyStep>> call = service.getAllDutySteps();
@@ -185,7 +161,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
         call.enqueue(new Callback<List<DutyStep>>() {
             @Override
             public void onResponse(Call<List<DutyStep>> call, Response<List<DutyStep>> response) {
-//
+
                 dutyStepList = response.body(); // 업무 단계 List 받으면.
 
                 GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
@@ -196,7 +172,6 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
                     @Override
                     public void onResponse(Call<List<DutyStep>> call, Response<List<DutyStep>> response) {
 
-//                        dutyStepList = response.body(); // 업무 단계 List 받으면.
                         List<DutyStep> step1List = response.body(); // 해당되는 List 만 받기.
                         step1List = response.body(); // List 받으면?.
                         Log.d(TAG, "해당 리스트는? : " + step1List);
@@ -208,13 +183,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
                                 itemViewHolder.rvSubItem.setLayoutManager(layoutManager);
                                 itemViewHolder.rvSubItem.setAdapter(subItemAdapter);
                             }
-//                            else {
-//                                subItemAdapter = new SubItemAdapter(dutyStepList);
-//                            }
-
                         }
-
-
                     }
 
                     @Override

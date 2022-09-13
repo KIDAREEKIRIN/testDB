@@ -16,6 +16,9 @@
         android:usesCleartextTraffic="true"
         tools:ignore="UnusedAttribute">
         <activity
+            android:name=".DutyExample.DetailView.Popup.Popup_Step_Edit"
+            android:exported="false" />
+        <activity
             android:name=".DutyExample.DetailView.Popup.Popup_Step"
             android:exported="true" />
         <activity

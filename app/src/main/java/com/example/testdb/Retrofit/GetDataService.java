@@ -69,4 +69,19 @@ public interface GetDataService {
             @Field("step_id") Integer step_id,
             @Field("step_check") Integer step_check
     );
+
+    // 업무 단계 수정하기 Update.
+    @FormUrlEncoded
+    @POST("test5/DutyExample/step_update.php")
+    Call<DutyStep> updateStep(
+            @Field("step_id") Integer step_id,
+            @Field("step_name") String step_name
+    );
+
+    // 업무 단계 삭제하기 Delete.
+    @FormUrlEncoded
+    @POST("test5/DutyExample/step_delete.php")
+    Call<DutyStep> deleteStep(
+            @Field("step_id") Integer step_id
+    );
 }
