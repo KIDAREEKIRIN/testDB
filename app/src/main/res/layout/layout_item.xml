@@ -48,19 +48,10 @@
 
             </LinearLayout>
 
-
-
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_sub_item"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
-
-<!--            <com.google.android.material.floatingactionbutton.FloatingActionButton-->
-<!--                android:id="@+id/fab_addStep"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_gravity="center"-->
-<!--                android:src="@drawable/ic_add"/>-->
 
         </LinearLayout>
 

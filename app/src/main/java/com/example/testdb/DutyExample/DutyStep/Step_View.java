@@ -1,11 +1,15 @@
 package com.example.testdb.DutyExample.DutyStep;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -30,8 +34,7 @@ public class Step_View extends AppCompatActivity {
 
     RecyclerView rv_dutyStep;
     LinearLayoutManager linearLayoutManager;
-//    SubItemAdapter subItemAdapter;
-    StepView_Adapter stepView_adapter;
+    StepView_Adapter stepView_adapter; // Adapter
     List<DutyStep> dutyStepList;
 
     ActionBar actionBar;
@@ -61,28 +64,40 @@ public class Step_View extends AppCompatActivity {
         rv_dutyStep = findViewById(R.id.rv_dutyStep);
         linearLayoutManager = new LinearLayoutManager(Step_View.this);
 
-//        dutyStepList = new ArrayList<>();
-//
-//        GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
-//        Call<List<DutyStep>> call = service.getSteps(title_id);
-//
-//        call.enqueue(new Callback<List<DutyStep>>() {
-//            @Override
-//            public void onResponse(Call<List<DutyStep>> call, Response<List<DutyStep>> response) {
-//                dutyStepList = response.body();
-//
-//                stepView_adapter = new StepView_Adapter(dutyStepList);
-////                subItemAdapter = new SubItemAdapter(dutyStepList);
-//                rv_dutyStep.setLayoutManager(linearLayoutManager);
-//                rv_dutyStep.setAdapter(stepView_adapter);
-//
-//            }
-//
-//            @Override
-//            public void onFailure(Call<List<DutyStep>> call, Throwable t) {
-//
-//            }
-//        });
+        // ItemTouchHelper 관련.
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(ItemTouchHelper.UP | ItemTouchHelper.DOWN, ItemTouchHelper.START | ItemTouchHelper.END ) {
+            // 드래그 앤 드롭.
+            @Override
+            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+                Log.d(TAG, "onMove: 현재 포지션: " + viewHolder.getAdapterPosition());
+                Log.d(TAG, "onMove: 옮기는 포지션: " + target.getAdapterPosition());
+                return stepView_adapter.moveItem(viewHolder.getAdapterPosition(), target.getAdapterPosition()); // 처음위치 -> 옮겨질 위치.
+
+            }
+
+            // 삭제하기.
+            @Override
+            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+                stepView_adapter.remove(viewHolder.getAdapterPosition());
+            }
+
+            // 선택했을 때,
+            @Override
+            public void onSelectedChanged(@Nullable RecyclerView.ViewHolder viewHolder, int actionState) {
+                super.onSelectedChanged(viewHolder, actionState);
+                if(actionState == ItemTouchHelper.ACTION_STATE_DRAG) {
+                    viewHolder.itemView.setBackgroundColor(Color.LTGRAY); // 선택한 viewHolder 의 색깔이 라이트그레이.
+                }
+            }
+
+            // 다시 돌아갔을 때,
+            @Override
+            public void clearView(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder) {
+                super.clearView(recyclerView, viewHolder);
+                viewHolder.itemView.setBackgroundColor(Color.WHITE); // 선택한 viewHolder 값이 풀리면 화이트로 돌아감.(기존 화이트)
+            }
+        });
+        itemTouchHelper.attachToRecyclerView(rv_dutyStep); // RecyclerView 에 붙여주기.
 
         getAllSteps(); // 업무 단계 전부 불러오기.
         addStep(); // 업무 단계 추가하기.
@@ -122,25 +137,6 @@ public class Step_View extends AppCompatActivity {
 
             }
         });
-
-//        GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
-//        Call<List<DutyStep>> call = service.getAllDutySteps();
-//
-//        call.enqueue(new Callback<List<DutyStep>>() {
-//            @Override
-//            public void onResponse(Call<List<DutyStep>> call, Response<List<DutyStep>> response) {
-//                dutyStepList = response.body();
-//
-//                subItemAdapter = new SubItemAdapter(dutyStepList);
-//                rv_dutyStep.setLayoutManager(linearLayoutManager);
-//                rv_dutyStep.setAdapter(subItemAdapter);
-//            }
-//
-//            @Override
-//            public void onFailure(Call<List<DutyStep>> call, Throwable t) {
-//                Log.d(TAG, "실패한 이유 : " + t.getLocalizedMessage());
-//            }
-//        });
     }
 
     @Override

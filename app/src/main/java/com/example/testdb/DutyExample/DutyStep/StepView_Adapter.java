@@ -53,7 +53,7 @@ public class StepView_Adapter extends RecyclerView.Adapter<StepView_Adapter.Step
             tv_dutyStep.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    int pos = getAdapterPosition();
+                    int pos = getAdapterPosition(); // 현재 포지션.
                     if(pos != RecyclerView.NO_POSITION) {
                         step_id = dutyStepList.get(pos).getStep_id(); // step_id
                         step_name = dutyStepList.get(pos).getStep_name(); // step_name
@@ -147,8 +147,17 @@ public class StepView_Adapter extends RecyclerView.Adapter<StepView_Adapter.Step
         });
     }
 
+    // dutyStepList 아이템 옮기기.
+    public boolean moveItem(int fromPosition, int toPosition) {
+        DutyStep text = dutyStepList.get(fromPosition);
+        dutyStepList.remove(fromPosition);
+        dutyStepList.add(toPosition, text);
+        notifyItemMoved(fromPosition,toPosition);
+        return true;
+    }
+
     // dutyStepList 에서 지우기.
-    private void remove(int position) {
+    public void remove(int position) {
         try {
             dutyStepList.remove(position);
             notifyItemRemoved(position);

@@ -34,6 +34,8 @@ public class DetailView extends AppCompatActivity {
     ActionBar actionBar;
     Context context;
 
+    // RecyclerView
+
     ExtendedFloatingActionButton fab_addTitle;
 
     List<DutyTitle> dutyTitleList;
@@ -50,7 +52,6 @@ public class DetailView extends AppCompatActivity {
         Intent intent = getIntent();
         duty_id = intent.getIntExtra("duty_id",0); // duty_id 받아온 값 넣기.
         duty_name = intent.getStringExtra("duty_name"); // duty_name 받아온 값 넣기.
-//        addTitle = intent.getStringExtra("addTitle"); // Popup 창에서 추가한 업무 제목.
 
         actionBar = getSupportActionBar();
         assert actionBar != null; // setTitle 을 넣기 위한 방법.
@@ -63,24 +64,6 @@ public class DetailView extends AppCompatActivity {
 //            getAllSteps();// Step 불러오기.
             addTitle(); // 업무 제목 추가하기
     }
-
-    public void getAllSteps() {
-        GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
-        Call<List<DutyStep>> call = service.getAllDutySteps();
-
-        call.enqueue(new Callback<List<DutyStep>>() {
-            @Override
-            public void onResponse(Call<List<DutyStep>> call, Response<List<DutyStep>> response) {
-                dutyStepList = response.body();
-            }
-
-            @Override
-            public void onFailure(Call<List<DutyStep>> call, Throwable t) {
-                Log.d(TAG, "실패한 이유 : " + t.getLocalizedMessage());
-            }
-        });
-    }
-
     // 업무 제목 추가하기.
     private void addTitle() {
         fab_addTitle = findViewById(R.id.fab_addTitle);
@@ -95,6 +78,7 @@ public class DetailView extends AppCompatActivity {
         });
     }
 
+    // 업무 제목 불러오기 Read.
     public void getAllTitles() {
         GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
         Call<List<DutyTitle>> call = service.getAllTitles();
@@ -118,14 +102,23 @@ public class DetailView extends AppCompatActivity {
         });
     }
 
-//    private void Double_RecyclerView(List<DutyTitle> dutyTitleList) {
-//        // 상위 리사이클러뷰 설정.
-//        RecyclerView rvItem = findViewById(R.id.rv_item);
-//        LinearLayoutManager layoutManager = new LinearLayoutManager(DetailView.this);
-//        ItemAdapter itemAdapter = new ItemAdapter(dutyTitleList);
-//        rvItem.setLayoutManager(layoutManager);
-//        rvItem.setAdapter(itemAdapter);
-//    }
+
+    public void getAllSteps() {
+        GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
+        Call<List<DutyStep>> call = service.getAllDutySteps();
+
+        call.enqueue(new Callback<List<DutyStep>>() {
+            @Override
+            public void onResponse(Call<List<DutyStep>> call, Response<List<DutyStep>> response) {
+                dutyStepList = response.body();
+            }
+
+            @Override
+            public void onFailure(Call<List<DutyStep>> call, Throwable t) {
+                Log.d(TAG, "실패한 이유 : " + t.getLocalizedMessage());
+            }
+        });
+    }
 
 
 
