@@ -15,6 +15,9 @@ import com.example.testdb.R;
 import com.example.testdb.Retrofit.GetDataService;
 import com.example.testdb.Retrofit.RetrofitClientInstance;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -26,6 +29,8 @@ public class Popup_Step extends AppCompatActivity {
 
     Integer title_id;
     String step_name;
+
+    List<DutyStep> dutyStepList;
 
     private static String TAG = "클릭 시";
 
@@ -46,6 +51,7 @@ public class Popup_Step extends AppCompatActivity {
         btn_insertStep.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+//                getAllSteps(); // 업무 단계를 다 불러와서,
                 step_name = et_insertStep.getText().toString();
                 Log.d(TAG, "추가한 데이터 : " + step_name);
                 insertStep(step_name, title_id); // DB 에 Insert 완료.
@@ -82,6 +88,23 @@ public class Popup_Step extends AppCompatActivity {
             public void onFailure(Call<DutyStep> call, Throwable t) {
                 Toast.makeText(getApplicationContext(), "실패", Toast.LENGTH_SHORT).show();
                 Log.d(TAG, "실패한 이유: " + t.getLocalizedMessage());
+            }
+        });
+    }
+
+    private void getAllSteps() {
+        GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
+        Call<List<DutyStep>> call = service.getAllDutySteps();
+
+        call.enqueue(new Callback<List<DutyStep>>() {
+            @Override
+            public void onResponse(Call<List<DutyStep>> call, Response<List<DutyStep>> response) {
+                dutyStepList = response.body();
+            }
+
+            @Override
+            public void onFailure(Call<List<DutyStep>> call, Throwable t) {
+                Log.d(TAG, "실패한 이유 : " + t.getLocalizedMessage());
             }
         });
     }

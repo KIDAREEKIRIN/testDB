@@ -120,8 +120,6 @@ public class DetailView extends AppCompatActivity {
         });
     }
 
-
-
     @Override
     protected void onResume() {
         super.onResume();

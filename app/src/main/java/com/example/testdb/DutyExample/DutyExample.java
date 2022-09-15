@@ -5,6 +5,7 @@ import androidx.appcompat.widget.SearchView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -120,6 +121,7 @@ public class DutyExample extends AppCompatActivity {
         rv_dutyExample.setAdapter(example_adapter);
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     private void filter(String newText) {
         List<DutyName> filteredList = new ArrayList<>();
         for (DutyName item : dutyNameList) {

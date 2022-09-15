@@ -6,6 +6,7 @@ import com.google.gson.annotations.SerializedName;
 public class DutyStep {
 
     @SerializedName("step_id") Integer step_id;
+    @SerializedName("step_order") Integer step_order; // 업무 단계 순서.
     @SerializedName("step_name") String step_name;
     @SerializedName("step_check") Integer step_check;
     @SerializedName("title_id") Integer title_id;
@@ -17,8 +18,9 @@ public class DutyStep {
     @Expose
     @SerializedName("message") private String message;
 
-    public DutyStep(Integer step_id, String step_name, Integer step_check, Integer title_id) {
+    public DutyStep(Integer step_id, Integer step_order, String step_name, Integer step_check, Integer title_id) {
         this.step_id = step_id;
+        this.step_order = step_order;
         this.step_name = step_name;
         this.step_check = step_check;
         this.title_id = title_id;
@@ -30,6 +32,14 @@ public class DutyStep {
 
     public void setStep_id(Integer step_id) {
         this.step_id = step_id;
+    }
+
+    public Integer getStep_order() {
+        return step_order;
+    }
+
+    public void setStep_order(Integer step_order) {
+        this.step_order = step_order;
     }
 
     public String getStep_name() {

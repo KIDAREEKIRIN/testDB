@@ -55,6 +55,21 @@ public interface GetDataService {
             @Field("title_id") Integer title_id
     );
 
+    // 업무 step_order 추가하기 Insert
+    @FormUrlEncoded
+    @POST("test5/DutyExample/step_order_insert.php")
+    Call<DutyStep> insertStepOrder(
+            @Field("step_order") Integer step_order
+    );
+
+    // 업무 step_order 수정하기 UPDATE
+    @FormUrlEncoded
+    @POST("test5/DutyExample/step_order_update.php")
+    Call<DutyStep> updateStepOrder(
+            @Field("step_id") Integer step_id,
+            @Field("step_order") Integer step_order
+    );
+
     // Title_step 리스트 표현하기.
     @FormUrlEncoded
     @POST("test5/DutyExample/steps_read.php")

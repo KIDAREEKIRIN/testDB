@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -29,7 +30,7 @@ public class StepView_Adapter extends RecyclerView.Adapter<StepView_Adapter.Step
 
     List<DutyStep> dutyStepList;
 
-    Integer step_id;
+    Integer step_id, step_order;
     String step_name;
 
     private static String TAG = "클릭";
@@ -48,16 +49,25 @@ public class StepView_Adapter extends RecyclerView.Adapter<StepView_Adapter.Step
 
             tv_dutyStep = itemView.findViewById(R.id.tv_sub_item_title);
             ib_deleteStep = itemView.findViewById(R.id.ib_deleteStep);
+            // 현재 포지션 값 서버에 집어 넣기 Insert
+//            int pos = getLayoutPosition(); // 이 값은 -1 임.
+
+//            insertStepOrder(pos); // pos 값 집어넣기.
 
             // TextView 클릭하면,
             tv_dutyStep.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     int pos = getAdapterPosition(); // 현재 포지션.
+//                    // 현재 포지션 값 서버에 집어 넣기 Insert
+//                    insertStepOrder(pos);
+                    Log.d(TAG, "현재 추가된 포지션 값: " + pos);
                     if(pos != RecyclerView.NO_POSITION) {
                         step_id = dutyStepList.get(pos).getStep_id(); // step_id
+                        step_order = dutyStepList.get(pos).getStep_order(); // 현재 포지션 값.
                         step_name = dutyStepList.get(pos).getStep_name(); // step_name
                         Log.d(TAG, "현재 포지션: "+ pos);
+                        Log.d(TAG, "서버에 입력한 포지션: " + step_order);
                         Log.d(TAG, "현재 step_id: " + step_id);
                         Log.d(TAG, "현재 step_name: " + step_name);
 
@@ -122,6 +132,57 @@ public class StepView_Adapter extends RecyclerView.Adapter<StepView_Adapter.Step
         return dutyStepList.size();
     }
 
+    // step_order 값 추가하기. Insert
+    public void insertStepOrder(Integer step_order) {
+        GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
+        Call<DutyStep> call = service.insertStepOrder(step_order);
+
+        call.enqueue(new Callback<DutyStep>() {
+            @Override
+            public void onResponse(Call<DutyStep> call, Response<DutyStep> response) {
+                if(response.isSuccessful() && response.body() != null) {
+                    Boolean success = response.body().getSuccess();
+                    if(success) {
+                        Log.d(TAG, "onResponse: step_order 입력");
+                    } else {
+                        Log.d(TAG, "onResponse: 통신은 했으나 step_order 입력 실패");
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<DutyStep> call, Throwable t) {
+                Log.d(TAG, "onFailure: 통신 실패 이유: " + t.getLocalizedMessage());
+            }
+        });
+    }
+
+    // 업무 step_order 수정하기. UPDATE
+    public void updateStepOrder(Integer step_id, Integer step_order) {
+        GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
+        Call<DutyStep> call = service.updateStepOrder(step_id, step_order);
+
+        call.enqueue(new Callback<DutyStep>() {
+            @Override
+            public void onResponse(Call<DutyStep> call, Response<DutyStep> response) {
+                if(response.isSuccessful() && response.body() != null) {
+                    Boolean success = response.body().getSuccess();
+                    if(success) {
+                        Log.d(TAG, "onResponse: step_order 수정 완료");
+                    } else {
+                        Log.d(TAG, "onResponse: 서버와 통신 했으나 step_order 수정 불가");
+
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<DutyStep> call, Throwable t) {
+                Log.d(TAG, "onFailure: 통신 불가능 이유 : " + t.getLocalizedMessage());
+            }
+        });
+    }
+
     //Retrofit 에서 duty_step 삭제하기.
     private void deleteStep(Integer step_id) {
         GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
@@ -165,5 +226,4 @@ public class StepView_Adapter extends RecyclerView.Adapter<StepView_Adapter.Step
             ex.printStackTrace();
         }
     }
-
 }

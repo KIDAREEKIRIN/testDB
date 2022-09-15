@@ -69,6 +69,25 @@ public class Step_View extends AppCompatActivity {
             // 드래그 앤 드롭.
             @Override
             public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+                int nowPos = viewHolder.getAdapterPosition();
+//                stepView_adapter.insertStepOrder(nowPos);
+                // dutyStepList 불러와서 step_id에 해당하는 step_order 수정하기.
+                GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
+                Call<List<DutyStep>> call = service.getSteps(title_id);
+
+                call.enqueue(new Callback<List<DutyStep>>() {
+                    @Override
+                    public void onResponse(Call<List<DutyStep>> call, Response<List<DutyStep>> response) {
+                        dutyStepList = response.body();
+                        stepView_adapter.updateStepOrder(dutyStepList.get(nowPos).getStep_id(),nowPos);
+                    }
+
+                    @Override
+                    public void onFailure(Call<List<DutyStep>> call, Throwable t) {
+
+                    }
+                });
+
                 Log.d(TAG, "onMove: 현재 포지션: " + viewHolder.getAdapterPosition());
                 Log.d(TAG, "onMove: 옮기는 포지션: " + target.getAdapterPosition());
                 return stepView_adapter.moveItem(viewHolder.getAdapterPosition(), target.getAdapterPosition()); // 처음위치 -> 옮겨질 위치.
@@ -116,6 +135,7 @@ public class Step_View extends AppCompatActivity {
         });
     }
 
+    // 업무 단계 전부 불러오기.
     public void getAllSteps() {
 
         GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
