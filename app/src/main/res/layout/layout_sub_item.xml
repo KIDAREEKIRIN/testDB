@@ -28,7 +28,7 @@
                     android:id="@+id/ib_deleteStep"
                     android:layout_width="60dp"
                     android:layout_height="42dp"
-                    android:background="@drawable/ic_drag"/>
+                    android:background="@drawable/ic_delete"/>
 
         </LinearLayout>
 

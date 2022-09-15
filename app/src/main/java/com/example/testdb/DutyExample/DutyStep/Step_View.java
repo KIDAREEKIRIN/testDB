@@ -69,7 +69,7 @@ public class Step_View extends AppCompatActivity {
             // 드래그 앤 드롭.
             @Override
             public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
-                int nowPos = viewHolder.getAdapterPosition();
+
 //                stepView_adapter.insertStepOrder(nowPos);
                 // dutyStepList 불러와서 step_id에 해당하는 step_order 수정하기.
                 GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
@@ -78,8 +78,9 @@ public class Step_View extends AppCompatActivity {
                 call.enqueue(new Callback<List<DutyStep>>() {
                     @Override
                     public void onResponse(Call<List<DutyStep>> call, Response<List<DutyStep>> response) {
+                        // title_id 에 따라 dutyStepList 불러오기.
                         dutyStepList = response.body();
-                        stepView_adapter.updateStepOrder(dutyStepList.get(nowPos).getStep_id(),nowPos);
+
                     }
 
                     @Override
@@ -114,6 +115,10 @@ public class Step_View extends AppCompatActivity {
             public void clearView(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder) {
                 super.clearView(recyclerView, viewHolder);
                 viewHolder.itemView.setBackgroundColor(Color.WHITE); // 선택한 viewHolder 값이 풀리면 화이트로 돌아감.(기존 화이트)
+//                // 이 부분 수정해야할 듯;
+//                int nowPos = viewHolder.getAdapterPosition(); // 현재 viewHolder 포지션.
+//                // ViewHolder 포지션 값을 바꿔준다. 현재 값으로 step_order 값에 넣어준다.
+//                stepView_adapter.updateStepOrder(dutyStepList.get(nowPos).getStep_id(),nowPos);
             }
         });
         itemTouchHelper.attachToRecyclerView(rv_dutyStep); // RecyclerView 에 붙여주기.

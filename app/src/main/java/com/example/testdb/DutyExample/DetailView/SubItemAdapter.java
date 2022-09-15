@@ -56,14 +56,15 @@ public class SubItemAdapter extends RecyclerView.Adapter<SubItemAdapter.SubItemV
     @Override
     public void onBindViewHolder(@NonNull SubItemViewHolder holder, int i) {
         DutyStep dutyStep = dutyStepList.get(i);
-        step_name = dutyStep.getStep_name(); // step_name 변수.
-        step_id = dutyStep.getStep_id(); // step_id 변수
-        step_check = dutyStep.getStep_check(); // step_check 변수
-        holder.ct_duty_step.setText(step_name);// step_name 붙이기
+        step_name = dutyStepList.get(i).getStep_name(); // step_name 변수.
+        step_id = dutyStepList.get(i).getStep_id(); // step_id 변수
+        step_check = dutyStepList.get(i).getStep_check(); // step_check 변수
+        holder.ct_duty_step.setTag(step_check);
 
-        holder.ct_duty_step.setTag(dutyStep.getStep_check());
-
-        if(step_check == 1) {
+        // BindViewHolder 가 아니라 ViewHolder 에 해야함.
+        // step_check,
+        // 체크 되어 있으면,
+        if(dutyStep.getStep_check() == 1) {
             holder.ct_duty_step.toggle();
             holder.ct_duty_step.isChecked();
             holder.ct_duty_step.setPaintFlags(holder.ct_duty_step.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
@@ -72,13 +73,14 @@ public class SubItemAdapter extends RecyclerView.Adapter<SubItemAdapter.SubItemV
                 @Override
                 public void onClick(View view) {
                     holder.ct_duty_step.toggle();
+                    int check = dutyStep.getStep_check();
                     // CheckBox 체크 되면.
                     if(holder.ct_duty_step.isChecked()) {
                         holder.ct_duty_step.setPaintFlags(holder.ct_duty_step.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
-                        updateCheck(step_id, step_check);
+                        updateCheck(dutyStep.getStep_id(), check);
                     } else {
                         holder.ct_duty_step.setPaintFlags(0);
-                        updateCheck(step_id, step_check-1);
+                        updateCheck(dutyStep.getStep_id(), check-1);
                     }
                 }
             });
@@ -88,23 +90,30 @@ public class SubItemAdapter extends RecyclerView.Adapter<SubItemAdapter.SubItemV
                 @Override
                 public void onClick(View view) {
                     holder.ct_duty_step.toggle();
-//                    int check = duty
+                    int check = dutyStep.getStep_check();
                     if(holder.ct_duty_step.isChecked()) {
                         holder.ct_duty_step.setPaintFlags(holder.ct_duty_step.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
-                        updateCheck(step_id,step_check+1);
+                        updateCheck(dutyStep.getStep_id(),check+1);
                     } else {
                         holder.ct_duty_step.setPaintFlags(0);
-                        updateCheck(step_id,step_check);
+                        updateCheck(dutyStep.getStep_id(),check);
                     }
                 }
             });
         }
+        holder.ct_duty_step.setText(step_name);// step_name 붙이기
 
 
     }
 
+    @Override
+    public int getItemCount() {
+        return dutyStepList.size();
+    }
+
+
     // CheckedTextView Retrofit 통신.
-    private void updateCheck(Integer step_id, Integer step_check) {
+    public void updateCheck(Integer step_id, Integer step_check) {
         GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
         Call<DutyStep> call = service.updateCheck(step_id, step_check);
 
@@ -121,11 +130,6 @@ public class SubItemAdapter extends RecyclerView.Adapter<SubItemAdapter.SubItemV
                 Log.d(TAG, "onFailure: " + t.getLocalizedMessage());
             }
         });
-    }
-
-    @Override
-    public int getItemCount() {
-        return dutyStepList.size();
     }
 
 

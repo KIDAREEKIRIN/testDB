@@ -51,9 +51,9 @@ public class Popup_Step extends AppCompatActivity {
         btn_insertStep.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                getAllSteps(); // 업무 단계를 다 불러와서,
                 step_name = et_insertStep.getText().toString();
                 Log.d(TAG, "추가한 데이터 : " + step_name);
+//                Integer step_order = nowPos;
                 insertStep(step_name, title_id); // DB 에 Insert 완료.
                 finish(); // 종료.
             }

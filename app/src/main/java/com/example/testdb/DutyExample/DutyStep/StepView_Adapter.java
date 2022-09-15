@@ -49,18 +49,12 @@ public class StepView_Adapter extends RecyclerView.Adapter<StepView_Adapter.Step
 
             tv_dutyStep = itemView.findViewById(R.id.tv_sub_item_title);
             ib_deleteStep = itemView.findViewById(R.id.ib_deleteStep);
-            // 현재 포지션 값 서버에 집어 넣기 Insert
-//            int pos = getLayoutPosition(); // 이 값은 -1 임.
-
-//            insertStepOrder(pos); // pos 값 집어넣기.
 
             // TextView 클릭하면,
             tv_dutyStep.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     int pos = getAdapterPosition(); // 현재 포지션.
-//                    // 현재 포지션 값 서버에 집어 넣기 Insert
-//                    insertStepOrder(pos);
                     Log.d(TAG, "현재 추가된 포지션 값: " + pos);
                     if(pos != RecyclerView.NO_POSITION) {
                         step_id = dutyStepList.get(pos).getStep_id(); // step_id

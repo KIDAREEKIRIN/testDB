@@ -38,6 +38,8 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
     String title_name;
     Integer duty_id, title_id;
 
+    SubItemAdapter subItemAdapter; // subItemAdapter 붙이기.
+
     private static String TAG = "현재 클릭";
 
     public ItemAdapter(List<DutyTitle> dutyTitleList) {
@@ -174,11 +176,12 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
 
                         List<DutyStep> step1List = response.body(); // 해당되는 List 만 받기.
                         step1List = response.body(); // List 받으면?.
-                        Log.d(TAG, "해당 리스트는? : " + step1List);
+                        Log.d(TAG, "해당 리스트는? : " + step1List); // 리스트 있으면 다 불러옴.
                         // 해당하는 title_id 가 같으면 항목을 출력한다
-                        SubItemAdapter subItemAdapter;// dutyStepList 전체 붙이기.
+                        // dutyStepList 전체 붙이기.
                         for (int i = 0; i <= dutyStepList.size(); i++) {
                             if(dutyTitle.getTitle_id() == i) {
+                                // step1List 를 SubItemAdapter 붙이기/
                                 subItemAdapter = new SubItemAdapter(step1List);
                                 itemViewHolder.rvSubItem.setLayoutManager(layoutManager);
                                 itemViewHolder.rvSubItem.setAdapter(subItemAdapter);
