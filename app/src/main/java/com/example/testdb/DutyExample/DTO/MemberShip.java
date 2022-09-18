@@ -10,6 +10,9 @@ public class MemberShip {
     @SerializedName("result_code")
     private int resultCode;
 
+    @SerializedName("number")
+    private int number;
+
     @SerializedName("nickName")
     private String nickName;
 
@@ -47,5 +50,9 @@ public class MemberShip {
 
     public String getEmail() {
         return email;
+    }
+
+    public int getNumber() {
+        return number;
     }
 }
