@@ -3,6 +3,7 @@ package com.example.testdb.Retrofit;
 import com.example.testdb.DutyExample.DTO.DutyName;
 import com.example.testdb.DutyExample.DTO.DutyStep;
 import com.example.testdb.DutyExample.DTO.DutyTitle;
+import com.example.testdb.DutyExample.DTO.MemberShip;
 
 import java.util.List;
 
@@ -14,9 +15,17 @@ import retrofit2.http.POST;
 
 public interface GetDataService {
 
+    // Login
+    @FormUrlEncoded
+    @POST("login.php")
+    Call<MemberShip> performUserLogin(@Field("id") String id,
+                                      @Field("pw") String pw);
+
+    // 업무 이름 불러오기 Read.
     @GET("test5/DutyExample/DutyExample_read.php")
     Call<List<DutyName>> getAllDutyNames();
 
+    // 업무 제목 불러오기 Read.
     @GET("test5/DutyExample/title_read.php")
     Call<List<DutyTitle>> getAllTitles();
 

@@ -16,8 +16,18 @@
         android:usesCleartextTraffic="true"
         tools:ignore="UnusedAttribute">
         <activity
+            android:name=".Login.login"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity
             android:name=".DutyExample.DetailView.Popup.Popup_Step_Edit"
-            android:exported="false" />
+            android:exported="true" />
         <activity
             android:name=".DutyExample.DetailView.Popup.Popup_Step"
             android:exported="true" />
@@ -29,7 +39,7 @@
             android:exported="true" />
         <activity
             android:name=".DutyExample.DetailView.Popup.Popup"
-            android:exported="false" />
+            android:exported="true" />
         <activity
             android:name=".DutyExample.DetailView.DetailView"
             android:exported="true" />
@@ -38,13 +48,7 @@
             android:exported="true" />
         <activity
             android:name=".MainActivity"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+            android:exported="true"/>
     </application>
 
 </manifest>

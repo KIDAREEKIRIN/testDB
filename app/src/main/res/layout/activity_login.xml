@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLogin"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".Login.login">
+
+        <TextView
+            android:id="@+id/tv_login"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:text="로그인"
+            android:textSize="48sp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <!--    <Button-->
+        <!--        android:id="@+id/bt_findInfo"-->
+        <!--        android:layout_width="wrap_content"-->
+        <!--        android:layout_height="58dp"-->
+        <!--        android:layout_marginEnd="35dp"-->
+        <!--        android:ems="10"-->
+        <!--        android:text="ID/PW찾기"-->
+        <!--        app:layout_constraintEnd_toEndOf="parent"-->
+        <!--        app:layout_constraintHorizontal_bias="0.875"-->
+        <!--        app:layout_constraintStart_toEndOf="@+id/cb_remember"-->
+        <!--        app:layout_constraintTop_toBottomOf="@+id/et_loginPw" />-->
+
+        <CheckBox
+            android:id="@+id/cb_remember"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="56dp"
+            android:ems="10"
+            android:onClick="checkBoxClicked"
+            android:text="자동 로그인"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.497"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/et_loginPw" />
+
+        <EditText
+            android:id="@+id/et_loginId"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            android:ems="9"
+            android:hint="아이디"
+            android:inputType="text"
+            android:textSize="32sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.513"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_login" />
+
+        <Button
+            android:id="@+id/bt_findId"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+
+            android:layout_marginStart="36dp"
+            android:layout_marginTop="8dp"
+            android:text="아이디 찾기"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/et_loginPw" />
+
+        <EditText
+            android:id="@+id/et_loginPw"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="9"
+            android:hint="비밀번호"
+            android:inputType="textPassword"
+            android:textSize="32sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.513"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/et_loginId" />
+
+        <Button
+            android:id="@+id/bt_findPassword"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="37dp"
+            android:text="비밀번호 재설정"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/et_loginPw" />
+
+        <Button
+            android:id="@+id/bt_loginSuccess"
+            android:layout_width="338dp"
+            android:layout_height="58dp"
+            android:layout_marginTop="108dp"
+            android:backgroundTint="#ffffff"
+            android:text="로그인"
+            android:textColor="@color/black"
+            android:textSize="24dp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.493"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/et_loginPw" />
+
+        <Button
+            android:id="@+id/bt_signUpPage"
+            android:layout_width="338dp"
+            android:layout_height="58dp"
+            android:text="회원가입"
+            android:textSize="24dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.493"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/bt_loginSuccess" />
+
+        <Button
+            android:id="@+id/bt_privacy"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="35dp"
+            android:text="개인정보 처리방침"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/bt_signUpPage" />
+
+        <LinearLayout
+            android:id="@+id/show_progress"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="48dp"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:visibility="invisible"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/bt_signUpPage">
+
+            <ProgressBar
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginTop="25dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:gravity="center"
+                android:text="잠시만 기다려주세요..." />
+
+        </LinearLayout>
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>
