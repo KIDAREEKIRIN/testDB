@@ -16,6 +16,9 @@
         android:usesCleartextTraffic="true"
         tools:ignore="UnusedAttribute">
         <activity
+            android:name=".DutySelect.DutySelect"
+            android:exported="false" />
+        <activity
             android:name=".Login.login"
             android:exported="true">
             <intent-filter>
@@ -24,7 +27,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".DutyExample.DetailView.Popup.Popup_Step_Edit"
             android:exported="true" />
@@ -48,7 +50,7 @@
             android:exported="true" />
         <activity
             android:name=".MainActivity"
-            android:exported="true"/>
+            android:exported="true" />
     </application>
 
 </manifest>

@@ -145,6 +145,7 @@ public class login extends AppCompatActivity {
                     if(response.body().getStatus().equals("ok")) {
                         if(response.body().getResultCode() == 1) {
                             String name = response.body().getNickName();
+                            Integer number = response.body().getNumber();
                             // 자동 로그인.
                             if(isRememberUserLogin) {
                                 appConfig.updateUserLoginStatus(true);
@@ -152,7 +153,10 @@ public class login extends AppCompatActivity {
                             }
                             // main 화면 교체 후, 메인화면으로 이동 // 기존 home.class. 21.11.2.
                             Intent intent = new Intent(login.this, MainActivity.class);
-                            intent.putExtra("name",name);
+                            intent.putExtra("name",name); // Member 닉네임.
+                            intent.putExtra("number",number); // Member 인덱스 값
+                            Log.e(TAG, "닉네임 : " + name );
+                            Log.e(TAG, "Index 값 : " + number );
                             Toast.makeText(getApplicationContext(), "로그인 한 아이디" + name, Toast.LENGTH_SHORT).show();
                             startActivity(intent);
                             finish();
