@@ -16,7 +16,10 @@
         android:usesCleartextTraffic="true"
         tools:ignore="UnusedAttribute">
         <activity
-            android:name=".DutySelect.DutySelect"
+            android:name=".MyDuty.DutySelect.MyDutySelect"
+            android:exported="false" />
+        <activity
+            android:name=".MyDuty.MyDuty"
             android:exported="false" />
         <activity
             android:name=".Login.login"

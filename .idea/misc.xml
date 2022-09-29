@@ -4,20 +4,25 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="app/src/main/res/drawable/ic_menu.xml" value="0.4625" />
-        <entry key="app/src/main/res/layout/activity_duty_example.xml" value="0.43333333333333335" />
+        <entry key="app/src/main/res/layout/activity_duty_example.xml" value="0.358974358974359" />
         <entry key="app/src/main/res/layout/activity_duty_example_detail_view.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/activity_duty_select.xml" value="0.12291666666666666" />
         <entry key="app/src/main/res/layout/activity_dutyselect.xml" value="0.24479166666666666" />
         <entry key="app/src/main/res/layout/activity_login.xml" value="0.43333333333333335" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/activity_my_duty_select.xml" value="0.24479166666666666" />
+        <entry key="app/src/main/res/layout/activity_myduty.xml" value="0.12894341512268404" />
         <entry key="app/src/main/res/layout/activity_popup.xml" value="0.15489130434782608" />
         <entry key="app/src/main/res/layout/activity_popup_edit.xml" value="0.20989583333333334" />
         <entry key="app/src/main/res/layout/activity_popup_step.xml" value="0.43333333333333335" />
         <entry key="app/src/main/res/layout/activity_popup_step_edit.xml" value="0.2682291666666667" />
         <entry key="app/src/main/res/layout/activity_step_view.xml" value="0.43333333333333335" />
-        <entry key="app/src/main/res/layout/example_items.xml" value="0.43333333333333335" />
-        <entry key="app/src/main/res/layout/layout_check_item.xml" value="0.43333333333333335" />
+        <entry key="app/src/main/res/layout/dutyselect_items.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/example_items.xml" value="0.27319587628865977" />
+        <entry key="app/src/main/res/layout/layout_check_item.xml" value="0.1" />
         <entry key="app/src/main/res/layout/layout_item.xml" value="0.43333333333333335" />
         <entry key="app/src/main/res/layout/layout_sub_item.xml" value="0.43333333333333335" />
+        <entry key="app/src/main/res/layout/myduty_items.xml" value="0.11817726589884828" />
       </map>
     </option>
   </component>

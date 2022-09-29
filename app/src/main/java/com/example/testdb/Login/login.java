@@ -144,20 +144,20 @@ public class login extends AppCompatActivity {
                 if(response.code() == 200) {
                     if(response.body().getStatus().equals("ok")) {
                         if(response.body().getResultCode() == 1) {
-                            String name = response.body().getNickName();
-                            Integer number = response.body().getNumber();
+                            String nickName = response.body().getNickName();// 얘는 안되는 것일까??? -> 카멜표기법 오류 09.26.
+                            Integer number = response.body().getNumber(); // 왜 이것은 되는 것이고.
                             // 자동 로그인.
                             if(isRememberUserLogin) {
                                 appConfig.updateUserLoginStatus(true);
-                                appConfig.saveNameOfUser(name);
+                                appConfig.saveNameOfUser(nickName);
                             }
                             // main 화면 교체 후, 메인화면으로 이동 // 기존 home.class. 21.11.2.
                             Intent intent = new Intent(login.this, MainActivity.class);
-                            intent.putExtra("name",name); // Member 닉네임.
+                            intent.putExtra("nickName",nickName); // Member 닉네임.
                             intent.putExtra("number",number); // Member 인덱스 값
-                            Log.e(TAG, "닉네임 : " + name );
+                            Log.e(TAG, "닉네임 : " + nickName );
                             Log.e(TAG, "Index 값 : " + number );
-                            Toast.makeText(getApplicationContext(), "로그인 한 아이디" + name, Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(), "로그인 한 아이디" + nickName, Toast.LENGTH_SHORT).show();
                             startActivity(intent);
                             finish();
 

@@ -41,7 +41,7 @@ public class DutyExample extends AppCompatActivity {
         // DutyName 받아오기.
         dutyNameList = new ArrayList<>();
 
-        getAllDuties(); // Get 업무 이름 데이터
+//        getAllDuties(); // Get 업무 이름 데이터
         searchView(); // SearchView 검색.
         buttonCategory(); // Button 카테고리 누르기.
         // Retrofit 을 통한 데이터 Get.

@@ -108,4 +108,11 @@ public interface GetDataService {
     Call<DutyStep> deleteStep(
             @Field("step_id") Integer step_id
     );
+
+    // 나의 업무 불러오기 Read.
+    @FormUrlEncoded
+    @POST("test5/DutySelect/myDuty_read.php")
+    Call<List<DutyName>> getMyDuties(
+            @Field("number") Integer number // user_id 값을 입력하면 불러오기
+    );
 }

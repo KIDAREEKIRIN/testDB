@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/cv_myDutyName"
+    app:cardElevation="8dp"
+    app:cardCornerRadius="8dp"
+    android:layout_margin="8dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp">
+
+        <TextView
+            android:id="@+id/tv_myDutyName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="4dp"
+            android:layout_weight="1"
+            android:text="@string/dutyName"
+            android:textColor="@color/black"
+            android:textSize="28sp"/>
+
+<!--        <CheckedTextView-->
+<!--            android:id="@+id/ct_myDutyName"-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:drawableLeft="?android:attr/listChoiceIndicatorMultiple"-->
+<!--            android:layout_weight="1"-->
+<!--            android:textSize="28sp"-->
+<!--            android:textStyle="bold"-->
+<!--            android:layout_margin="4dp"-->
+<!--            android:text="업무 이름"-->
+<!--            android:checked="false"-->
+<!--            android:gravity="center"-->
+<!--            />-->
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>

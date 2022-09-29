@@ -2,7 +2,6 @@ package com.example.testdb;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.cardview.widget.CardView;
 
 import android.content.Context;
 import android.content.Intent;
@@ -17,7 +16,7 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.example.testdb.DutyExample.DutyExample;
-import com.example.testdb.DutySelect.DutySelect;
+import com.example.testdb.MyDuty.MyDuty;
 import com.example.testdb.Login.AppConfig;
 import com.example.testdb.Login.login;
 
@@ -41,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
         //Intent 값 받기
         Intent intent = getIntent();
         loginIndex = intent.getIntExtra("number",0); // 인덱스 값.
-        loginNickName = intent.getStringExtra("name"); // 닉네임.
+        loginNickName = intent.getStringExtra("nickName"); // 닉네임.
 
         checkNetworkState(); // 네트워크 연결상태 확인.
 
@@ -58,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
         rl_MyDuties.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(),DutySelect.class);
+                Intent intent = new Intent(getApplicationContext(), MyDuty.class);
                 intent.putExtra("loginIndex",loginIndex); // 로그인 인덱스 값.
                 intent.putExtra("loginNickName",loginNickName); // 로그인 닉네임 값.
                 startActivity(intent);
@@ -87,6 +86,7 @@ public class MainActivity extends AppCompatActivity {
         rl_searchMain = findViewById(R.id.rl_searchMain);
     }
 
+    // 전체업무 보기
     private void AllDuties() {
         rl_AllDuties = findViewById(R.id.rl_AllDuties);
         rl_AllDuties.setOnClickListener(new View.OnClickListener() {
@@ -97,6 +97,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    // 네트워크 연결 확인
     private void checkNetworkState() {
         manager = (ConnectivityManager) this.getSystemService(Context.CONNECTIVITY_SERVICE);
 

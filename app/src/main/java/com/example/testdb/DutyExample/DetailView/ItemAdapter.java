@@ -167,7 +167,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
                 dutyStepList = response.body(); // 업무 단계 List 받으면.
 
                 GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
-                Call<List<DutyStep>> call2 = service.getSteps(dutyTitle.getTitle_id());
+                Call<List<DutyStep>> call2 = service.getSteps(dutyTitle.getTitle_id()); // title_id 값에 따라서 불러오기
 
                 // title_order 값에 따라 달라지기.
                 call2.enqueue(new Callback<List<DutyStep>>() {
