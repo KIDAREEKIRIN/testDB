@@ -37,6 +37,11 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        rl_searchMain = findViewById(R.id.rl_searchMain); // 검색필터
+        rl_AllDuties = findViewById(R.id.rl_AllDuties); // 전체업무
+        rl_MyDuties = findViewById(R.id.rl_MyDuties); // 나의 업무
+        btn_logout = findViewById(R.id.btn_logout); // 로그아웃 버튼
+
         //Intent 값 받기
         Intent intent = getIntent();
         loginIndex = intent.getIntExtra("number",0); // 인덱스 값.
@@ -53,14 +58,19 @@ public class MainActivity extends AppCompatActivity {
 
     // 나의 업무 클릭 시,
     private void MyDuties() {
-        rl_MyDuties = findViewById(R.id.rl_MyDuties);
         rl_MyDuties.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), MyDuty.class);
-                intent.putExtra("loginIndex",loginIndex); // 로그인 인덱스 값.
-                intent.putExtra("loginNickName",loginNickName); // 로그인 닉네임 값.
-                startActivity(intent);
+                // 로그인 인덱스 값이 null = 0 이면 (로그인 하지 않으면)
+                if(loginIndex == 0) {
+                    Toast.makeText(getApplicationContext(), "로그인이 필요합니다", Toast.LENGTH_SHORT).show();
+                    // 로그인 인덱스 값이 null != 0 이면 (로그인 하면,
+                } else {
+                    Intent intent = new Intent(getApplicationContext(), MyDuty.class);
+                    intent.putExtra("loginIndex",loginIndex); // 로그인 인덱스 값.
+                    intent.putExtra("loginNickName",loginNickName); // 로그인 닉네임 값.
+                    startActivity(intent);
+                }
             }
         });
     }
@@ -70,7 +80,6 @@ public class MainActivity extends AppCompatActivity {
 
         appConfig = new AppConfig(this); // 자동 로그인.
 
-        btn_logout = findViewById(R.id.btn_logout);
         btn_logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -82,13 +91,13 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    // 검색 클릭 시,
     private void MainSearch() {
-        rl_searchMain = findViewById(R.id.rl_searchMain);
+
     }
 
     // 전체업무 보기
     private void AllDuties() {
-        rl_AllDuties = findViewById(R.id.rl_AllDuties);
         rl_AllDuties.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

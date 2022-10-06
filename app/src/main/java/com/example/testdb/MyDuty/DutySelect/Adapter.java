@@ -45,7 +45,6 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
             cv_dutySelectName = itemView.findViewById(R.id.cv_dutySelectName); // 카드뷰.
             ct_myDutySelect = itemView.findViewById(R.id.ct_myDutySelect); // 체크박스+텍스트뷰.
 
-
         }
     }
 
@@ -65,6 +64,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
         holder.ct_myDutySelect.setText(dutyNameList.get(position).getDuty_name());
 
 
+        holder.ct_myDutySelect.toggle();
 
     }
 
