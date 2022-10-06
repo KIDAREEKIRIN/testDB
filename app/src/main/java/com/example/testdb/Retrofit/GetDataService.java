@@ -94,6 +94,14 @@ public interface GetDataService {
             @Field("step_check") Integer step_check
     );
 
+    // 업무 이름 체크박스 Post 관련.
+    @FormUrlEncoded
+    @POST("test5/DutySelect/update_name_check.php")
+    Call<DutyName> updateNameCheck(
+            @Field("duty_id") Integer duty_id,
+            @Field("name_check") Integer name_check
+    );
+
     // 업무 단계 수정하기 Update.
     @FormUrlEncoded
     @POST("test5/DutyExample/step_update.php")
