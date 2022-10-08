@@ -123,4 +123,10 @@ public interface GetDataService {
     Call<List<DutyName>> getMyDuties(
             @Field("number") Integer number // user_id 값을 입력하면 불러오기
     );
+    // 나의 업무 컬럼값 추가하기.
+//    @FormUrlEncoded
+//    @POST("test5/DutySelect/myDuty_insert.php")
+//    Call<List<DutyName>> insertMyDuties(
+//            @Field("")
+//    )
 }

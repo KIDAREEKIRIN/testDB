@@ -45,6 +45,9 @@ public class MyDuty extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_myduty);
 
+        // 확장 FloatingActionButton
+        extendFab_myDutyList = findViewById(R.id.extendFab_myDutyList);
+
         // 인텐트 값 받기 -> MainActivity 에서.
         Intent intent = getIntent();
         loginIndex = intent.getIntExtra("loginIndex",0); // 로그인 인덱스 값.
@@ -82,7 +85,6 @@ public class MyDuty extends AppCompatActivity {
 
     // 업무 추가하기.
     private void addMyDuties() {
-        extendFab_myDutyList = findViewById(R.id.extendFab_myDutyList);
         extendFab_myDutyList.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -112,7 +114,10 @@ public class MyDuty extends AppCompatActivity {
                     intent.putExtra("loginNickName",loginNickName); // 로그인 닉네임.
                     Log.d(TAG, "로그인 인덱스: : " + loginIndex);
                     Log.d(TAG, "로그인 닉네임: + " + loginNickName);
+                    // 해당 테이블의 컬럼값을 추가하기.
+
                     startActivity(intent);
+                    // 신규업무 클릭 시,
                 } else {
                     Toast.makeText(getApplicationContext(), "준비중입니다.", Toast.LENGTH_SHORT).show();
                 }
