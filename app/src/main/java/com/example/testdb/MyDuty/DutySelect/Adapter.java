@@ -77,7 +77,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
         holder.ct_myDutySelect.setTag(name_check);
 
 
-        if(dutyName.getName_check() == 1) {
+        if(name_check == 1) {
             holder.ct_myDutySelect.toggle();
             holder.ct_myDutySelect.isChecked();
             holder.ct_myDutySelect.setPaintFlags(holder.ct_myDutySelect.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
@@ -87,14 +87,15 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
                 @Override
                 public void onClick(View view) {
                     holder.ct_myDutySelect.toggle();
-                    int check = dutyNameList.get(position).getName_check();
+//                    int check = dutyNameList.get(position).getName_check();
                     // check 되면
                     if(holder.ct_myDutySelect.isChecked()) {
                         holder.ct_myDutySelect.setPaintFlags(holder.ct_myDutySelect.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
-                        updateNameCheck(duty_id,check);
+                        // 체크된 값을 보내기
+                        updateNameCheck(duty_id,name_check);
                     } else {
                         holder.ct_myDutySelect.setPaintFlags(0);
-                        updateNameCheck(duty_id,check-1);
+                        updateNameCheck(duty_id,name_check-1);
                     }
                 }
             });
@@ -104,13 +105,13 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
                 @Override
                 public void onClick(View view) {
                     holder.ct_myDutySelect.toggle();
-                    int check = dutyNameList.get(position).getName_check();
+//                    int check = dutyNameList.get(position).getName_check();
                     if(holder.ct_myDutySelect.isChecked()) {
                         holder.ct_myDutySelect.setPaintFlags(holder.ct_myDutySelect.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
-                        updateNameCheck(duty_id, check+1);
+                        updateNameCheck(duty_id, name_check+1);
                     } else {
                         holder.ct_myDutySelect.setPaintFlags(0);
-                        updateNameCheck(duty_id, check);
+                        updateNameCheck(duty_id, name_check);
                     }
                 }
             });
