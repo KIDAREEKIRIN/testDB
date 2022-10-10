@@ -23,20 +23,6 @@
             android:textColor="@color/black"
             android:textSize="28sp"/>
 
-<!--        <CheckedTextView-->
-<!--            android:id="@+id/ct_myDutyName"-->
-<!--            android:layout_width="0dp"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:drawableLeft="?android:attr/listChoiceIndicatorMultiple"-->
-<!--            android:layout_weight="1"-->
-<!--            android:textSize="28sp"-->
-<!--            android:textStyle="bold"-->
-<!--            android:layout_margin="4dp"-->
-<!--            android:text="업무 이름"-->
-<!--            android:checked="false"-->
-<!--            android:gravity="center"-->
-<!--            />-->
-
     </LinearLayout>
 
 </androidx.cardview.widget.CardView>

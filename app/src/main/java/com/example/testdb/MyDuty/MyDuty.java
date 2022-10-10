@@ -53,6 +53,8 @@ public class MyDuty extends AppCompatActivity {
         loginIndex = intent.getIntExtra("loginIndex",0); // 로그인 인덱스 값.
         loginNickName = intent.getStringExtra("loginNickName"); // 로그인 닉네임 값.
 
+        dutyNameList = new ArrayList<>();
+
         GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
         Call<List<DutyName>> call = service.getMyDuties(loginIndex);
 
@@ -65,7 +67,7 @@ public class MyDuty extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<List<DutyName>> call, Throwable t) {
-
+                Toast.makeText(getApplicationContext(), "연결 실패" + t.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -80,11 +82,10 @@ public class MyDuty extends AppCompatActivity {
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(MyDuty.this);
         rv_myDuty.setLayoutManager(layoutManager);
         rv_myDuty.setAdapter(myDuty_adapter);
-
     }
 
     // 업무 추가하기.
-    private void addMyDuties() {
+    public void addMyDuties() {
         extendFab_myDutyList.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
