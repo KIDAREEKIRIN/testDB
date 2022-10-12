@@ -90,16 +90,16 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
                 @Override
                 public void onClick(View view) {
                     holder.ct_myDutySelect.toggle();
-                    int check = dutyNameList.get(position).getName_check();
+                    int check = dutyName.getName_check();
                     // check 되면
                     if(holder.ct_myDutySelect.isChecked()) {
                         holder.ct_myDutySelect.setPaintFlags(holder.ct_myDutySelect.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
                         // 체크된 값을 보내기
-                        updateNameCheck(duty_id,check);
+                        updateNameCheck(dutyName.getDuty_id(),check);
                         // 체크된 값이 없으면,
                     } else {
                         holder.ct_myDutySelect.setPaintFlags(0);
-                        updateNameCheck(duty_id,check-1);
+                        updateNameCheck(dutyName.getDuty_id(),check-1);
                     }
                 }
             });
@@ -112,10 +112,10 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
                     int check = dutyName.getName_check();
                     if(holder.ct_myDutySelect.isChecked()) {
                         holder.ct_myDutySelect.setPaintFlags(holder.ct_myDutySelect.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
-                        updateNameCheck(duty_id, check+1);
+                        updateNameCheck(dutyName.getDuty_id(), check+1);
                     } else {
                         holder.ct_myDutySelect.setPaintFlags(0);
-                        updateNameCheck(duty_id, check);
+                        updateNameCheck(dutyName.getDuty_id(), check);
                     }
                 }
             });

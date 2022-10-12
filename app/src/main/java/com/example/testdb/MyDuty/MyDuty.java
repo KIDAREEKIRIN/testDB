@@ -34,6 +34,9 @@ public class MyDuty extends AppCompatActivity {
     Integer loginIndex; // 로그인 인덱스
     String loginNickName; // 로그인 닉네임
 
+    Integer myDuty_index;
+    String myDuty_nickName;
+
     List<DutyName> dutyNameList;
     MyDuty_Adapter myDuty_adapter;
     RecyclerView rv_myDuty; // RecyclerView
@@ -53,7 +56,11 @@ public class MyDuty extends AppCompatActivity {
         loginIndex = intent.getIntExtra("loginIndex",0); // 로그인 인덱스 값.
         loginNickName = intent.getStringExtra("loginNickName"); // 로그인 닉네임 값.
 
-        dutyNameList = new ArrayList<>(); // 업무 이름 리스트 객체 생성.
+        Intent intent1 = getIntent();
+        myDuty_index = intent1.getIntExtra("loginIndex",0);
+        myDuty_nickName = intent1.getStringExtra("loginNickName");
+
+//        dutyNameList = new ArrayList<>(); // 업무 이름 리스트 객체 생성.
 
         // 로그인 인덱스에 따른 업무 불러오기
         GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
@@ -63,7 +70,13 @@ public class MyDuty extends AppCompatActivity {
             @Override
             public void onResponse(Call<List<DutyName>> call, Response<List<DutyName>> response) {
                 dutyNameList = response.body();
-                generateMyDuties(dutyNameList); // myDuty 불러오기.
+                if(loginIndex.equals(myDuty_index)) {
+                    generateMyDuties(dutyNameList); // myDuty 불러오기.
+                } else {
+                    Toast.makeText(getApplicationContext(), "다시 확인해주세요", Toast.LENGTH_SHORT).show();
+                    Log.d(TAG, "아니면," + loginIndex + myDuty_index);
+                }
+
             }
 
             @Override

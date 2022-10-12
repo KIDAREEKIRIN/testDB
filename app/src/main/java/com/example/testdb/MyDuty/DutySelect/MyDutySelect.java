@@ -57,9 +57,11 @@ public class MyDutySelect extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 // 해당 과목 추가하기 (Insert)
+//                insertDutyById()
                 Intent intent1 = new Intent(getApplicationContext(), MyDuty.class);
+                intent1.putExtra("loginIndex",loginIndex);
+                intent1.putExtra("loginNickName",loginNickName);
                 startActivity(intent1);
-
                 finish();
             }
         });
