@@ -68,15 +68,16 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull Adapter.ViewHolder holder, int position) {
-        DutyName dutyName = dutyNameList.get(position);
         duty_id = dutyNameList.get(position).getDuty_id(); // duty_name 인덱스.
         duty_name = dutyNameList.get(position).getDuty_name(); // duty_name
         name_check = dutyNameList.get(position).getName_check(); // 체크박스 유/무
 
         holder.cv_dutySelectName.setTag(duty_id);
         holder.ct_myDutySelect.setTag(name_check);
+        // CheckedTextView 클릭한다면,
 
-
+        // 여기에 문제가 있다, -> 22.10.12.(수) -> 체크된 데이터가 넘어가지 않음.
+        // 체크되어 있으면,
         if(name_check == 1) {
             holder.ct_myDutySelect.toggle();
             holder.ct_myDutySelect.isChecked();
@@ -93,6 +94,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
                         holder.ct_myDutySelect.setPaintFlags(holder.ct_myDutySelect.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
                         // 체크된 값을 보내기
                         updateNameCheck(duty_id,name_check);
+                        // 체크된 값이 없으면,
                     } else {
                         holder.ct_myDutySelect.setPaintFlags(0);
                         updateNameCheck(duty_id,name_check-1);
@@ -116,6 +118,8 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
                 }
             });
         }
+
+
         holder.ct_myDutySelect.setText(duty_name); // 업무 이름 붙이기. -> subItem과 순서가 다름.
 
     }

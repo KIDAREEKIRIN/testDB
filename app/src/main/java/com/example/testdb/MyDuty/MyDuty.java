@@ -53,8 +53,9 @@ public class MyDuty extends AppCompatActivity {
         loginIndex = intent.getIntExtra("loginIndex",0); // 로그인 인덱스 값.
         loginNickName = intent.getStringExtra("loginNickName"); // 로그인 닉네임 값.
 
-        dutyNameList = new ArrayList<>();
+        dutyNameList = new ArrayList<>(); // 업무 이름 리스트 객체 생성.
 
+        // 로그인 인덱스에 따른 업무 불러오기
         GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
         Call<List<DutyName>> call = service.getMyDuties(loginIndex);
 
@@ -89,12 +90,14 @@ public class MyDuty extends AppCompatActivity {
         extendFab_myDutyList.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                AlertDialog();
-//                // 업무 추가하기 화면 전환.
-//                Intent intent = new Intent(getApplicationContext(), MyDutySelect.class);
-//                intent.putExtra("loginIndex",loginIndex); // 로그인 인덱스.
-//                intent.putExtra("loginNickName",loginNickName); // 로그인 닉네임.
-//                startActivity(intent);
+//                AlertDialog();
+
+
+                // 업무 추가하기 화면 전환.
+                Intent intent = new Intent(getApplicationContext(), MyDutySelect.class);
+                intent.putExtra("loginIndex",loginIndex); // 로그인 인덱스.
+                intent.putExtra("loginNickName",loginNickName); // 로그인 닉네임.
+                startActivity(intent);
 
             }
         });

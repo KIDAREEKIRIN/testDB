@@ -54,7 +54,8 @@ public class MyDutySelect extends AppCompatActivity {
             public void onClick(View view) {
                 // 해당 과목 추가하기 (Insert)
 
-                finish();
+
+//                finish();
             }
         });
 
@@ -63,7 +64,7 @@ public class MyDutySelect extends AppCompatActivity {
         btn_dutySelectBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                finish();
+//                finish();
             }
         });
 
