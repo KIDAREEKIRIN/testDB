@@ -102,6 +102,10 @@ public interface GetDataService {
             @Field("name_check") Integer name_check
     );
 
+    // MyDutySelect 업무이름 불러오기.
+    @GET("test5/DutySelect/dutySelect_read.php")
+    Call<List<DutyName>> getDutyNames();
+
     // 업무 단계 수정하기 Update.
     @FormUrlEncoded
     @POST("test5/DutyExample/step_update.php")

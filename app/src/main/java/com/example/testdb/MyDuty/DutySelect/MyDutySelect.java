@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.example.testdb.DutyExample.DTO.DutyName;
+import com.example.testdb.MyDuty.MyDuty;
 import com.example.testdb.R;
 import com.example.testdb.Retrofit.GetDataService;
 import com.example.testdb.Retrofit.RetrofitClientInstance;
@@ -34,6 +35,7 @@ public class MyDutySelect extends AppCompatActivity {
     Adapter dutySelect_adapter;
 
     Button btn_dutySelectOk, btn_dutySelectBack;
+    GetDataService service;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,39 +49,41 @@ public class MyDutySelect extends AppCompatActivity {
 
         // 로그인 인덱스 + 로그인 닉네임 값 보내기.
 
-        // 확인버튼 클릭 시,
         btn_dutySelectOk = findViewById(R.id.btn_dutySelectOk);
+        btn_dutySelectBack = findViewById(R.id.btn_dutySelectBack);
+
+        // 확인버튼 클릭 시,
         btn_dutySelectOk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 // 해당 과목 추가하기 (Insert)
+                Intent intent1 = new Intent(getApplicationContext(), MyDuty.class);
+                startActivity(intent1);
 
-
-//                finish();
+                finish();
             }
         });
 
         // 뒤로가기 버튼 클릭시,
-        btn_dutySelectBack = findViewById(R.id.btn_dutySelectBack);
         btn_dutySelectBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                finish();
+                finish();
             }
         });
 
-        dutyNameList = new ArrayList<>(); // 업무이름 생성하기
+//        dutyNameList = new ArrayList<>(); // 업무이름 생성하기
 
-
-        // 업무이름 불러오기. -> 전체 업무 불러오기.
-        GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
-        Call<List<DutyName>> call = service.getAllDutyNames();
+        // 업무이름 불러오기. -> MyDutySelect 불러오기.
+        service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
+        Call<List<DutyName>> call = service.getDutyNames();
 
         call.enqueue(new Callback<List<DutyName>>() {
             @Override
             public void onResponse(Call<List<DutyName>> call, Response<List<DutyName>> response) {
                 dutyNameList = response.body();
-                generateDutyNameList(dutyNameList); // 업무이름 리스트 불러오기.
+                generateDutyNameList(dutyNameList);
+
             }
 
             @Override
@@ -87,6 +91,22 @@ public class MyDutySelect extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "다음에 다시 시도해주세요." + t.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
             }
         });
+
+//        GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
+//        Call<List<DutyName>> call = service.getAllDutyNames();
+//
+//        call.enqueue(new Callback<List<DutyName>>() {
+//            @Override
+//            public void onResponse(Call<List<DutyName>> call, Response<List<DutyName>> response) {
+//                dutyNameList = response.body();
+//                generateDutyNameList(dutyNameList); // 업무이름 리스트 불러오기.
+//            }
+//
+//            @Override
+//            public void onFailure(Call<List<DutyName>> call, Throwable t) {
+//                Toast.makeText(getApplicationContext(), "다음에 다시 시도해주세요." + t.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+//            }
+//        });
 
 
 
