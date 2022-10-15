@@ -50,6 +50,8 @@ public class MyDuty extends AppCompatActivity {
 
         // 확장 FloatingActionButton
         extendFab_myDutyList = findViewById(R.id.extendFab_myDutyList);
+        // 리사이클러뷰
+        rv_myDuty = findViewById(R.id.rv_myDuty);
 
         // 인텐트 값 받기 -> MainActivity 에서.
         Intent intent = getIntent();
@@ -70,12 +72,13 @@ public class MyDuty extends AppCompatActivity {
             @Override
             public void onResponse(Call<List<DutyName>> call, Response<List<DutyName>> response) {
                 dutyNameList = response.body();
-                if(loginIndex.equals(myDuty_index)) {
-                    generateMyDuties(dutyNameList); // myDuty 불러오기.
-                } else {
-                    Toast.makeText(getApplicationContext(), "다시 확인해주세요", Toast.LENGTH_SHORT).show();
-                    Log.d(TAG, "아니면," + loginIndex + myDuty_index);
-                }
+                generateMyDuties(dutyNameList); // myDuty 불러오기.
+//                if(loginIndex.equals(myDuty_index)) {
+//
+//                } else {
+//                    Toast.makeText(getApplicationContext(), "다시 확인해주세요", Toast.LENGTH_SHORT).show();
+//                    Log.d(TAG, "아니면," + loginIndex + myDuty_index);
+//                }
 
             }
 
@@ -91,7 +94,6 @@ public class MyDuty extends AppCompatActivity {
     }
 
     public void generateMyDuties(List<DutyName> dutyNameList) {
-        rv_myDuty = findViewById(R.id.rv_myDuty);
         myDuty_adapter = new MyDuty_Adapter(this,dutyNameList);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(MyDuty.this);
         rv_myDuty.setLayoutManager(layoutManager);
@@ -103,14 +105,14 @@ public class MyDuty extends AppCompatActivity {
         extendFab_myDutyList.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                AlertDialog();
+                AlertDialog();
 
 
                 // 업무 추가하기 화면 전환.
-                Intent intent = new Intent(getApplicationContext(), MyDutySelect.class);
-                intent.putExtra("loginIndex",loginIndex); // 로그인 인덱스.
-                intent.putExtra("loginNickName",loginNickName); // 로그인 닉네임.
-                startActivity(intent);
+//                Intent intent = new Intent(getApplicationContext(), MyDutySelect.class);
+//                intent.putExtra("loginIndex",loginIndex); // 로그인 인덱스.
+//                intent.putExtra("loginNickName",loginNickName); // 로그인 닉네임.
+//                startActivity(intent);
 
             }
         });

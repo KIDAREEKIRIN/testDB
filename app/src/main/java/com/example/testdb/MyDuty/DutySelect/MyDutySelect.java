@@ -44,7 +44,7 @@ public class MyDutySelect extends AppCompatActivity {
 
         // Intent 로 값 받기 -> 로그인 하면 받은 값.
         Intent intent = getIntent();
-        loginIndex = intent.getIntExtra("loginIndex",0); // 로그인 인덱스.
+        loginIndex = intent.getIntExtra("loginIndex", 0); // 로그인 인덱스.
         loginNickName = intent.getStringExtra("loginNickName"); // 로그인 닉네임.
 
         // 로그인 인덱스 + 로그인 닉네임 값 보내기.
@@ -52,29 +52,6 @@ public class MyDutySelect extends AppCompatActivity {
         btn_dutySelectOk = findViewById(R.id.btn_dutySelectOk);
         btn_dutySelectBack = findViewById(R.id.btn_dutySelectBack);
 
-        // 확인버튼 클릭 시,
-        btn_dutySelectOk.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                // 해당 과목 추가하기 (Insert)
-//                insertDutyById()
-                Intent intent1 = new Intent(getApplicationContext(), MyDuty.class);
-                intent1.putExtra("loginIndex",loginIndex);
-                intent1.putExtra("loginNickName",loginNickName);
-                startActivity(intent1);
-                finish();
-            }
-        });
-
-        // 뒤로가기 버튼 클릭시,
-        btn_dutySelectBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-            }
-        });
-
-//        dutyNameList = new ArrayList<>(); // 업무이름 생성하기
 
         // 업무이름 불러오기. -> MyDutySelect 불러오기.
         service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
@@ -93,25 +70,29 @@ public class MyDutySelect extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "다음에 다시 시도해주세요." + t.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
             }
         });
-
-//        GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
-//        Call<List<DutyName>> call = service.getAllDutyNames();
-//
-//        call.enqueue(new Callback<List<DutyName>>() {
-//            @Override
-//            public void onResponse(Call<List<DutyName>> call, Response<List<DutyName>> response) {
-//                dutyNameList = response.body();
-//                generateDutyNameList(dutyNameList); // 업무이름 리스트 불러오기.
-//            }
-//
-//            @Override
-//            public void onFailure(Call<List<DutyName>> call, Throwable t) {
-//                Toast.makeText(getApplicationContext(), "다음에 다시 시도해주세요." + t.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
-//            }
-//        });
+        // 확인버튼 클릭 시,
+        btn_dutySelectOk.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // 해당 과목 추가하기 (Insert)
 
 
+//                insertDutyById()
+                Intent intent1 = new Intent(getApplicationContext(), MyDuty.class);
+                intent1.putExtra("loginIndex", loginIndex);
+                intent1.putExtra("loginNickName", loginNickName);
+                startActivity(intent1);
+                finish();
+            }
+        });
 
+        // 뒤로가기 버튼 클릭시,
+        btn_dutySelectBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
     }
 
     public void generateDutyNameList(List<DutyName> dutyNameList) {

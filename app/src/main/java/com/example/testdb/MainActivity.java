@@ -69,6 +69,7 @@ public class MainActivity extends AppCompatActivity {
                     Intent intent = new Intent(getApplicationContext(), MyDuty.class);
                     intent.putExtra("loginIndex",loginIndex); // 로그인 인덱스 값.
                     intent.putExtra("loginNickName",loginNickName); // 로그인 닉네임 값.
+
                     startActivity(intent);
                 }
             }
